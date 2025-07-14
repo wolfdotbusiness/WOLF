@@ -459,5 +459,11 @@
         });
     });
   </script>
+  <script>
+  // ✅ Redirect from www to non-www
+  if (window.location.hostname === "www.wolf.business") {
+    window.location.replace("https://wolf.business");
+  }
+</script>
 </body>
 </html>
