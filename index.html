@@ -3,14 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wolf.Business</title>
+  <title>Wolf.Business — Domain for Sale</title>
+
+  <!-- 🔍 SEO & Social Meta -->
+  <meta name="description" content="Wolf.Business — One word. True authority. Real asset. Domain for sale.">
+  <meta property="og:title" content="Wolf.Business">
+  <meta property="og:description" content="One word. True authority. Real asset. Domain for sale.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wolf.business">
+  <meta property="og:image" content="https://wolf.business/preview.jpg">
+
+  <!-- 🌐 Favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+  <!-- 📑 Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Offer",
+    "itemOffered": {
+      "@type": "Domain",
+      "name": "Wolf.Business",
+      "url": "https://wolf.business"
+    },
+    "description": "Premium one-word domain for sale. One word. True authority. Real asset.",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Person",
+      "name": "Owner of Wolf.Business",
+      "telephone": "+201276919466"
+    }
+  }
+  </script>
 
   <style>
     * { box-sizing: border-box; }
     body {
       margin: 0;
       padding: 0 15px;
-      background: #13121f;
+      background: linear-gradient(135deg, #13121f, #1c1b2e);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #ccc;
       display: flex;
@@ -31,32 +62,60 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin: 0.2em 0;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px rgba(242,107,107,0.7); }
+      to   { text-shadow: 0 0 20px rgba(194,108,197,0.9); }
     }
     .description {
       color: #bbb;
       font-size: 1.1rem;
       line-height: 1.6;
     }
+    .contact-links {
+      margin: 20px 0;
+    }
+    .contact-links a {
+      display: inline-block;
+      margin: 8px;
+      padding: 12px 25px;
+      border-radius: 30px;
+      background: #f26b6b;
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .contact-links a:hover {
+      background: #c26cc5;
+    }
+    .make-offer {
+      margin-top: 25px;
+    }
+    .make-offer a {
+      display: inline-block;
+      padding: 15px 40px;
+      border-radius: 35px;
+      background: linear-gradient(90deg, #f26b6b, #c26cc5);
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      transition: transform 0.2s;
+    }
+    .make-offer a:hover {
+      transform: scale(1.05);
+    }
     @media screen and (max-width: 768px) {
-      .title {
-        font-size: 3.5rem;
-      }
-      .description {
-        font-size: 1rem;
-        line-height: 1.5;
-      }
+      .title { font-size: 3.5rem; }
+      .description { font-size: 1rem; line-height: 1.5; }
     }
     @media screen and (max-width: 480px) {
-      body {
-        padding: 0 10px;
-      }
-      .title {
-        font-size: 2.5rem;
-      }
-      .description {
-        font-size: 0.95rem;
-        line-height: 1.4;
-      }
+      body { padding: 0 10px; }
+      .title { font-size: 2.5rem; }
+      .description { font-size: 0.95rem; line-height: 1.4; }
     }
   </style>
 </head>
@@ -64,10 +123,19 @@
   <div class="container">
     <h1 class="title">Wolf.Business</h1>
     <p class="description">
-       for sale.<br />
-      📞 +201276919466<br />
-     👉 “Wolf.Business — One word. True authority. Real asset.”🐺
+      Domain is <strong>for sale</strong>.<br /><br />
+      👉 “Wolf.Business — One word. True authority. Real asset.” 🐺
     </p>
+
+    <div class="contact-links">
+      📞 <a href="tel:+201276919466">Call Now</a>
+      💬 <a href="https://wa.me/201276919466" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      ✉️ <a href="mailto:offers@wolf.business">Email</a>
+    </div>
+
+    <div class="make-offer">
+      <a href="mailto:offers@wolf.business?subject=Offer%20for%20Wolf.Business">Make an Offer</a>
+    </div>
   </div>
 
   <script>
@@ -78,5 +146,7 @@
   </script>
 </body>
 </html>
+
+
 
 
