@@ -3,13 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wolf.Business</title>
-
+  <title>Wolf.Business — Domain for Sale</title>
   <style>
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      padding: 0 15px;
       background: #13121f;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #ccc;
@@ -18,64 +15,55 @@
       align-items: center;
       min-height: 100vh;
       text-align: center;
+      padding: 15px;
     }
-    .container {
-      max-width: 800px;
-      padding: 20px 15px;
-      width: 100%;
-    }
-    .title {
-      font-size: 5rem;
+    .container { max-width: 700px; }
+    h1 {
+      font-size: 4rem;
       font-weight: bold;
       background: linear-gradient(90deg, #f26b6b, #c26cc5);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin: 0.2em 0;
+      margin-bottom: 0.4em;
     }
-    .description {
-      color: #bbb;
+    .price {
+      font-size: 1.3rem;
+      color: #f26b6b;
+      margin-bottom: 1em;
+    }
+    .tagline {
       font-size: 1.1rem;
-      line-height: 1.6;
+      margin-bottom: 2em;
+      color: #bbb;
     }
-    @media screen and (max-width: 768px) {
-      .title {
-        font-size: 3.5rem;
-      }
-      .description {
-        font-size: 1rem;
-        line-height: 1.5;
-      }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
     }
-    @media screen and (max-width: 480px) {
-      body {
-        padding: 0 10px;
-      }
-      .title {
-        font-size: 2.5rem;
-      }
-      .description {
-        font-size: 0.95rem;
-        line-height: 1.4;
-      }
+    .btn {
+      background: linear-gradient(90deg, #f26b6b, #c26cc5);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
     }
+    .btn:hover { opacity: 0.85; transform: scale(1.05); }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1 class="title">Wolf.Business</h1>
-    <p class="description">
-       for sale<br />
-      📞 +201276919466<br />
-     👉 “Wolf.Business — One word. True authority. Real asset.”🐺
-    </p>
+    <h1>Wolf.Business</h1>
+    <p class="price">For Sale</p>
+    <p class="tagline">👉 “Wolf.Business — One word. True authority. Real asset.”✨</p>
+    <div class="buttons">
+      <a class="btn" href="tel:+201276919466">📞 Call Now</a>
+      <a class="btn" href="https://wa.me/201276919466" target="_blank">💬 Chat on WhatsApp</a>
+    </div>
   </div>
-
-  <script>
-    // ✅ Redirect from www to non-www
-    if (window.location.hostname === "www.wolf.business") {
-      window.location.replace("https://wolf.business");
-    }
-  </script>
 </body>
 </html>
-
