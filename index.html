@@ -7,34 +7,48 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #13121f;
+      background: radial-gradient(circle at top, #1e1b2e, #0d0c17);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #ccc;
+      color: #ddd;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       text-align: center;
-      padding: 15px;
+      padding: 20px;
     }
-    .container { max-width: 700px; }
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 40px 25px;
+      max-width: 700px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      animation: fadeIn 1s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     h1 {
-      font-size: 4rem;
+      font-size: 3.5rem;
       font-weight: bold;
       background: linear-gradient(90deg, #f26b6b, #c26cc5);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 0.4em;
+      margin-bottom: 0.3em;
     }
     .price {
-      font-size: 1.3rem;
-      color: #f26b6b;
-      margin-bottom: 1em;
+      font-size: 1.5rem;
+      color: #ff7979;
+      margin-bottom: 0.8em;
+      font-weight: bold;
     }
     .tagline {
       font-size: 1.1rem;
       margin-bottom: 2em;
-      color: #bbb;
+      color: #aaa;
+      line-height: 1.6;
     }
     .buttons {
       display: flex;
@@ -45,24 +59,30 @@
     .btn {
       background: linear-gradient(90deg, #f26b6b, #c26cc5);
       color: #fff;
-      padding: 12px 20px;
-      border-radius: 30px;
+      padding: 14px 28px;
+      border-radius: 40px;
       text-decoration: none;
       font-weight: bold;
+      font-size: 1rem;
       transition: 0.3s;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
     }
-    .btn:hover { opacity: 0.85; transform: scale(1.05); }
+    .btn:hover { opacity: 0.9; transform: scale(1.06); }
+    .btn.secondary {
+      background: #2d2c3a;
+      border: 1px solid #666;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="card">
     <h1>Wolf.Business</h1>
-    <p class="price">For Sale</p>
-    <p class="tagline">👉 “Wolf.Business — One word. True authority. Real asset.”✨</p>
+    <p class="price">🔥 Premium Domain For Sale</p>
+    <p class="tagline">👉 “One word. Unforgettable. True authority.  
+    The domain your brand deserves.” ✨</p>
     <div class="buttons">
-      <a class="btn" href="tel:+201276919466">📞 Call Now</a>
       <a class="btn" href="https://wa.me/201276919466" target="_blank">💬 Chat on WhatsApp</a>
+      <a class="btn secondary" href="tel:+201276919466">📞 Call Now</a>
     </div>
   </div>
 </body>
