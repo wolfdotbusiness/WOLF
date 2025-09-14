@@ -92,6 +92,25 @@
     display: none;
     text-align: left;
   }
+
+  /* OR Separator */
+  .or-separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #ccc;
+    margin: 10px 0;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .or-separator::before,
+  .or-separator::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #444;
+    margin: 0 10px;
+  }
 </style>
 </head>
 <body>
@@ -105,10 +124,10 @@
     <a class="btn secondary" href="tel:+201276919466">📞 Call Now</a>
   </div>
 
-  <!-- الفورم اللي هيظهر -->
+  <!-- الفورم -->
   <form class="offer-form" id="offerForm">
     <input type="email" id="email" placeholder="Your Email" />
-    <div style="text-align:left; color:#aaa; margin:5px 0;">or</div>
+    <div class="or-separator">OR</div>
     <input type="tel" id="phone" placeholder="Your Phone Number" />
     <input type="number" id="offerAmount" placeholder="Your Offer (min $20000)" required />
     <span id="contactError">⚠️ Please enter at least Email or Phone.</span>
