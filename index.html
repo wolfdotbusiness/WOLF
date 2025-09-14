@@ -86,7 +86,7 @@
     transition: 0.3s;
   }
   .offer-form button:hover { opacity: 0.9; transform: scale(1.05); }
-  #offerError {
+  #offerError, #contactError {
     color: #ff7979;
     font-size: 0.9rem;
     display: none;
@@ -107,9 +107,11 @@
 
   <!-- الفورم اللي هيظهر -->
   <form class="offer-form" id="offerForm">
-    <input type="email" placeholder="Your Email" required />
-    <input type="tel" placeholder="Your Phone Number" required />
+    <input type="email" id="email" placeholder="Your Email" />
+    <div style="text-align:center; color:#aaa; margin:5px 0;">or</div>
+    <input type="tel" id="phone" placeholder="Your Phone Number" />
     <input type="number" id="offerAmount" placeholder="Your Offer (min $20000)" required />
+    <span id="contactError">⚠️ Please enter at least Email or Phone.</span>
     <span id="offerError">⚠️ Offer must be at least $20,000!</span>
     <button type="submit">Send</button>
   </form>
@@ -118,15 +120,18 @@
 <script>
 const showFormBtn = document.getElementById('showFormBtn');
 const offerForm = document.getElementById('offerForm');
+const emailInput = document.getElementById('email');
+const phoneInput = document.getElementById('phone');
 const offerAmount = document.getElementById('offerAmount');
 const offerError = document.getElementById('offerError');
+const contactError = document.getElementById('contactError');
 
 showFormBtn.addEventListener('click', () => {
   offerForm.style.display = offerForm.style.display === 'flex' ? 'none' : 'flex';
   offerForm.scrollIntoView({ behavior: 'smooth' });
 });
 
-// Live validation أثناء الكتابة
+// Live validation للعرض
 offerAmount.addEventListener('input', () => {
   const value = parseFloat(offerAmount.value);
   if (value < 20000) {
@@ -141,17 +146,35 @@ offerAmount.addEventListener('input', () => {
 // التحقق عند إرسال الفورم
 offerForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  const value = parseFloat(offerAmount.value);
-  if (value < 20000) {
+  const offerValue = parseFloat(offerAmount.value);
+  const emailValue = emailInput.value.trim();
+  const phoneValue = phoneInput.value.trim();
+
+  let valid = true;
+
+  // تحقق من الحد الأدنى للعرض
+  if (offerValue < 20000) {
     offerError.style.display = 'block';
     offerAmount.classList.add('invalid');
-    return;
+    valid = false;
+  } else {
+    offerError.style.display = 'none';
+    offerAmount.classList.remove('invalid');
   }
+
+  // تحقق من إدخال إما إيميل أو فون أو الاثنين
+  if (!emailValue && !phoneValue) {
+    contactError.style.display = 'block';
+    valid = false;
+  } else {
+    contactError.style.display = 'none';
+  }
+
+  if (!valid) return;
+
   alert('Thanks! Your offer has been sent.');
   offerForm.reset();
   offerForm.style.display = 'none';
-  offerError.style.display = 'none';
-  offerAmount.classList.remove('invalid');
 });
 </script>
 </body>
