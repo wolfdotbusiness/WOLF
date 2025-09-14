@@ -108,7 +108,7 @@
   <!-- الفورم اللي هيظهر -->
   <form class="offer-form" id="offerForm">
     <input type="email" id="email" placeholder="Your Email" />
-    <div style="text-align:center; color:#aaa; margin:5px 0;">or</div>
+    <div style="text-align:left; color:#aaa; margin:5px 0;">or</div>
     <input type="tel" id="phone" placeholder="Your Phone Number" />
     <input type="number" id="offerAmount" placeholder="Your Offer (min $20000)" required />
     <span id="contactError">⚠️ Please enter at least Email or Phone.</span>
@@ -162,7 +162,7 @@ offerForm.addEventListener('submit', (e) => {
     offerAmount.classList.remove('invalid');
   }
 
-  // تحقق من إدخال إما إيميل أو فون أو الاثنين
+  // تحقق من إدخال إما إيميل أو فون أو الاثنين معًا
   if (!emailValue && !phoneValue) {
     contactError.style.display = 'block';
     valid = false;
