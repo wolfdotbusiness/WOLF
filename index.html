@@ -1,200 +1,208 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Wolf.Business</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: radial-gradient(circle at top, #1e1b2e, #0d0c17);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #ddd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    text-align: center;
-    padding: 20px;
-  }
-  .card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 40px 25px;
-    max-width: 700px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-    backdrop-filter: blur(8px);
-    animation: fadeIn 1s ease;
-    position: relative;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  h1 {
-    font-size: clamp(2.2rem, 6vw, 3.5rem);
-    font-weight: bold;
-    background: linear-gradient(90deg, #f26b6b, #c26cc5);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 0.3em;
-  }
-  .price { font-size: 1.5rem; color: #ff7979; margin-bottom: 0.8em; font-weight: bold; }
-  .tagline { font-size: 1.1rem; margin-bottom: 2em; color: #aaa; line-height: 1.6; }
-  .buttons { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-  .btn {
-    background: linear-gradient(90deg, #f26b6b, #c26cc5);
-    color: #fff;
-    padding: 14px 28px;
-    border-radius: 40px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1rem;
-    transition: 0.3s;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-    cursor: pointer;
-  }
-  .btn:hover { opacity: 0.9; transform: scale(1.06); }
-  .btn.secondary { background: #2d2c3a; border: 1px solid #666; }
+import React, { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { BadgeCheck, ShieldCheck, DollarSign, Mail, ArrowRight, Sparkles, Building2, Rocket, Landmark } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-  /* فورم العرض */
-  .offer-form {
-    display: none;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
-  }
-  .offer-form input {
-    padding: 12px 15px;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    font-size: 1rem;
-  }
-  .offer-form input.invalid {
-    border: 2px solid #ff7979;
-  }
-  .offer-form button {
-    padding: 12px 15px;
-    border-radius: 40px;
-    border: none;
-    background: linear-gradient(90deg, #f26b6b, #c26cc5);
-    color: #fff;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  .offer-form button:hover { opacity: 0.9; transform: scale(1.05); }
-  #offerError, #contactError {
-    color: #ff7979;
-    font-size: 0.9rem;
-    display: none;
-    text-align: left;
-  }
+// Single-file, production-ready landing section for Wolf.Business
+// TailwindCSS + shadcn/ui + framer-motion
+// How to use: Render <WolfBusinessLanding /> in your app root.
 
-  /* OR Separator */
-  .or-separator {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #ccc;
-    margin: 10px 0;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  .or-separator::before,
-  .or-separator::after {
-    content: "";
-    flex: 1;
-    border-bottom: 1px solid #444;
-    margin: 0 10px;
-  }
-</style>
-</head>
-<body>
-<div class="card">
-  <h1>Wolf.Business</h1>
-  <p class="price">🔥 Premium Domain For Sale</p>
-  <p class="tagline">👉 “One word. True authority. Real asset”🐺 </p>
+export default function WolfBusinessLanding() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [offer, setOffer] = useState("");
+  const [message, setMessage] = useState("");
 
-  <div class="buttons">
-    <button class="btn" id="showFormBtn">💰 Make an Offer</button>
-    <a class="btn secondary" href="tel:+201276919466">📞 Call Now</a>
-  </div>
+  const mailtoHref = useMemo(() => {
+    const to = "offers@wolf.business"; // change if needed
+    const subject = `Offer for Wolf.Business — ${offer || "Make Offer"}`;
+    const body = `Name: ${name}\nEmail: ${email}\nOffer (USD): ${offer}\n\nMessage:\n${message}`;
+    return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }, [name, email, offer, message]);
 
-  <!-- الفورم -->
-  <form class="offer-form" id="offerForm">
-    <input type="email" id="email" placeholder="Your Email" />
-    <div class="or-separator">OR</div>
-    <input type="tel" id="phone" placeholder="Your Phone Number" />
-    <input type="number" id="offerAmount" placeholder="Your Offer (min $20000)" required />
-    <span id="contactError">⚠️ Please enter at least Email or Phone.</span>
-    <span id="offerError">⚠️ Offer must be at least $20,000!</span>
-    <button type="submit">Send</button>
-  </form>
-</div>
+  return (
+    <div className="min-h-screen bg-neutral-950 text-white relative overflow-hidden">
+      {/* Glow background */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-fuchsia-500/20 blur-3xl"/>
+        <div className="absolute -bottom-40 -right-40 h-[28rem] w-[28rem] rounded-full bg-indigo-500/20 blur-3xl"/>
+      </div>
 
-<script>
-const showFormBtn = document.getElementById('showFormBtn');
-const offerForm = document.getElementById('offerForm');
-const emailInput = document.getElementById('email');
-const phoneInput = document.getElementById('phone');
-const offerAmount = document.getElementById('offerAmount');
-const offerError = document.getElementById('offerError');
-const contactError = document.getElementById('contactError');
+      {/* Nav */}
+      <header className="mx-auto max-w-7xl flex items-center justify-between px-6 py-6">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 grid place-items-center rounded-2xl bg-white text-black font-bold">WB</div>
+          <span className="text-xl tracking-tight font-semibold">Wolf.Business</span>
+        </div>
+        <div className="hidden md:flex items-center gap-3">
+          <a href="#offer" className="text-sm opacity-80 hover:opacity-100">Make an Offer</a>
+          <a href="#about" className="text-sm opacity-80 hover:opacity-100">About</a>
+          <a href="#use-cases" className="text-sm opacity-80 hover:opacity-100">Use Cases</a>
+        </div>
+      </header>
 
-showFormBtn.addEventListener('click', () => {
-  offerForm.style.display = offerForm.style.display === 'flex' ? 'none' : 'flex';
-  offerForm.scrollIntoView({ behavior: 'smooth' });
-});
+      {/* Hero */}
+      <section className="mx-auto max-w-7xl px-6 pt-6 pb-10 md:pb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
+        >
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs mb-4">
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>Premium One-Word Domain</span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
+              Wolf.Business
+            </h1>
+            <p className="mt-4 text-lg md:text-xl text-white/80">
+              One word. <span className="text-white">True authority.</span> Real asset.
+            </p>
+            <div className="mt-6 flex flex-col sm:flex-row gap-3">
+              <Button asChild size="lg" className="rounded-2xl px-6 text-base">
+                <a href="#offer" className="flex items-center gap-2">
+                  <DollarSign className="h-5 w-5" /> Make an Offer
+                </a>
+              </Button>
+              <Button asChild variant="secondary" size="lg" className="rounded-2xl px-6 text-base bg-white text-black hover:bg-white/90">
+                <a href="#about" className="flex items-center gap-2">
+                  <BadgeCheck className="h-5 w-5" /> Why this name?
+                </a>
+              </Button>
+            </div>
 
-// Live validation للعرض
-offerAmount.addEventListener('input', () => {
-  const value = parseFloat(offerAmount.value);
-  if (value < 20000) {
-    offerError.style.display = 'block';
-    offerAmount.classList.add('invalid');
-  } else {
-    offerError.style.display = 'none';
-    offerAmount.classList.remove('invalid');
-  }
-});
+            {/* Trust bullets */}
+            <ul className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-white/80">
+              <li className="flex items-center gap-2"><ShieldCheck className="h-4 w-4" /> Instant Brand Authority</li>
+              <li className="flex items-center gap-2"><Landmark className="h-4 w-4" /> Asset-Grade Investment</li>
+              <li className="flex items-center gap-2"><Rocket className="h-4 w-4" /> Launch-Ready Identity</li>
+            </ul>
+          </div>
 
-// التحقق عند إرسال الفورم
-offerForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const offerValue = parseFloat(offerAmount.value);
-  const emailValue = emailInput.value.trim();
-  const phoneValue = phoneInput.value.trim();
+          <Card className="bg-white/5 border-white/10 backdrop-blur-xl rounded-2xl">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Mail className="h-5 w-5" /> Submit Your Offer
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form
+                id="offer"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  window.location.href = mailtoHref;
+                }}
+                className="grid grid-cols-1 gap-4"
+              >
+                <input
+                  type="text"
+                  placeholder="Full name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:ring-2 focus:ring-white/30"
+                  required
+                />
+                <input
+                  type="email"
+                  placeholder="Work email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:ring-2 focus:ring-white/30"
+                  required
+                />
+                <input
+                  type="number"
+                  min={0}
+                  step="100"
+                  placeholder="Your offer (USD)"
+                  value={offer}
+                  onChange={(e) => setOffer(e.target.value)}
+                  className="w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:ring-2 focus:ring-white/30"
+                />
+                <textarea
+                  placeholder="Tell us about your use case or terms"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  rows={5}
+                  className="w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:ring-2 focus:ring-white/30"
+                />
+                <Button type="submit" size="lg" className="rounded-2xl">
+                  Send Offer <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+                <p className="text-xs text-white/60">
+                  By submitting, you consent to be contacted regarding this domain asset. Serious inquiries only.
+                </p>
+              </form>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </section>
 
-  let valid = true;
+      {/* About */}
+      <section id="about" className="mx-auto max-w-7xl px-6 py-10 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="bg-white/5 border-white/10 rounded-2xl">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-white/90"><Building2 className="h-5 w-5"/> Brand Authority</CardTitle>
+            </CardHeader>
+            <CardContent className="text-white/80">
+              "Wolf" is concise, memorable, and evokes leadership, intelligence, and strength—ideal for B2B and enterprise-facing brands.
+            </CardContent>
+          </Card>
+          <Card className="bg-white/5 border-white/10 rounded-2xl">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-white/90"><Landmark className="h-5 w-5"/> Asset Value</CardTitle>
+            </CardHeader>
+            <CardContent className="text-white/80">
+              One-word premium domains are scarce and retain value. The .business TLD aligns directly with consulting, SaaS, and corporate services.
+            </CardContent>
+          </Card>
+          <Card className="bg-white/5 border-white/10 rounded-2xl">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-white/90"><Rocket className="h-5 w-5"/> Launch-Ready</CardTitle>
+            </CardHeader>
+            <CardContent className="text-white/80">
+              Ideal for a consulting firm, venture studio, or B2B platform. Use now or hold long-term as a digital asset.
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
-  // تحقق من الحد الأدنى للعرض
-  if (offerValue < 20000) {
-    offerError.style.display = 'block';
-    offerAmount.classList.add('invalid');
-    valid = false;
-  } else {
-    offerError.style.display = 'none';
-    offerAmount.classList.remove('invalid');
-  }
+      {/* Use Cases */}
+      <section id="use-cases" className="mx-auto max-w-7xl px-6 pb-16">
+        <h2 className="text-2xl md:text-3xl font-bold mb-6">High-Impact Use Cases</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { title: "Management Consulting", desc: "High-trust brand for strategy, M&A, and growth advisory." },
+            { title: "B2B Marketing Agency", desc: "Distinct identity for performance, ABM, and enterprise demand gen." },
+            { title: "SaaS Platform", desc: "Authority-driven name for analytics, RevOps, or procurement tools." },
+            { title: "Venture Studio", desc: "Powerful umbrella brand for launching or acquiring businesses." },
+            { title: "Private Equity / Holdings", desc: "Memorable flagship for your portfolio or family office." },
+            { title: "Community & Media", desc: "Podcast, newsletter, and events centered on bold business leadership." },
+          ].map((item) => (
+            <Card key={item.title} className="bg-white/5 border-white/10 rounded-2xl">
+              <CardHeader>
+                <CardTitle className="text-white/90">{item.title}</CardTitle>
+              </CardHeader>
+              <CardContent className="text-white/75">{item.desc}</CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
 
-  // تحقق من إدخال إما إيميل أو فون أو الاثنين معًا
-  if (!emailValue && !phoneValue) {
-    contactError.style.display = 'block';
-    valid = false;
-  } else {
-    contactError.style.display = 'none';
-  }
+      {/* Footer */}
+      <footer className="border-t border-white/10">
+        <div className="mx-auto max-w-7xl px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-white/70">
+          <p>© {new Date().getFullYear()} Wolf.Business — Premium Domain Asset</p>
+          <a href={mailtoHref} className="inline-flex items-center gap-2 hover:text-white">
+            <Mail className="h-4 w-4" /> offers@wolf.business
+          </a>
+        </div>
+      </footer>
+    </div>
+  );
+}
 
-  if (!valid) return;
-
-  alert('Thanks! Your offer has been sent.');
-  offerForm.reset();
-  offerForm.style.display = 'none';
-});
-</script>
-</body>
-</html>
