@@ -1,200 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Wolf.Business</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: radial-gradient(circle at top, #1e1b2e, #0d0c17);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #ddd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    text-align: center;
-    padding: 20px;
-  }
-  .card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 40px 25px;
-    max-width: 700px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-    backdrop-filter: blur(8px);
-    animation: fadeIn 1s ease;
-    position: relative;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  h1 {
-    font-size: clamp(2.2rem, 6vw, 3.5rem);
-    font-weight: bold;
-    background: linear-gradient(90deg, #f26b6b, #c26cc5);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 0.3em;
-  }
-  .price { font-size: 1.5rem; color: #ff7979; margin-bottom: 0.8em; font-weight: bold; }
-  .tagline { font-size: 1.1rem; margin-bottom: 2em; color: #aaa; line-height: 1.6; }
-  .buttons { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-  .btn {
-    background: linear-gradient(90deg, #f26b6b, #c26cc5);
-    color: #fff;
-    padding: 14px 28px;
-    border-radius: 40px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1rem;
-    transition: 0.3s;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-    cursor: pointer;
-  }
-  .btn:hover { opacity: 0.9; transform: scale(1.06); }
-  .btn.secondary { background: #2d2c3a; border: 1px solid #666; }
-
-  /* فورم العرض */
-  .offer-form {
-    display: none;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
-  }
-  .offer-form input {
-    padding: 12px 15px;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    font-size: 1rem;
-  }
-  .offer-form input.invalid {
-    border: 2px solid #ff7979;
-  }
-  .offer-form button {
-    padding: 12px 15px;
-    border-radius: 40px;
-    border: none;
-    background: linear-gradient(90deg, #f26b6b, #c26cc5);
-    color: #fff;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  .offer-form button:hover { opacity: 0.9; transform: scale(1.05); }
-  #offerError, #contactError {
-    color: #ff7979;
-    font-size: 0.9rem;
-    display: none;
-    text-align: left;
-  }
-
-  /* OR Separator */
-  .or-separator {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #ccc;
-    margin: 10px 0;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  .or-separator::before,
-  .or-separator::after {
-    content: "";
-    flex: 1;
-    border-bottom: 1px solid #444;
-    margin: 0 10px;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wolf.Business</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at top, #1e1b2e, #0d0c17);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #ddd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 40px 25px;
+      max-width: 700px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      animation: fadeIn 1s ease;
+      position: relative;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      font-weight: bold;
+      background: linear-gradient(90deg, #f26b6b, #c26cc5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.3em;
+    }
+    .price { font-size: 1.5rem; color: #ff7979; margin-bottom: 0.8em; font-weight: bold; }
+    .tagline { font-size: 1.1rem; margin-bottom: 2em; color: #aaa; line-height: 1.6; }
+    .buttons { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+    .btn {
+      background: linear-gradient(90deg, #f26b6b, #c26cc5);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: 0.3s;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      cursor: pointer;
+    }
+    .btn:hover { opacity: 0.9; transform: scale(1.06); }
+    .btn.secondary { background: #2d2c3a; border: 1px solid #666; }
+    .offer-form {
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .offer-form input {
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+    }
+    .offer-form input.invalid {
+      border: 2px solid #ff7979;
+    }
+    .offer-form button {
+      padding: 12px 15px;
+      border-radius: 40px;
+      border: none;
+      background: linear-gradient(90deg, #f26b6b, #c26cc5);
+      color: #fff;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .offer-form button:hover { opacity: 0.9; transform: scale(1.05); }
+    #offerError, #contactError {
+      color: #ff7979;
+      font-size: 0.9rem;
+      display: none;
+      text-align: left;
+    }
+    .or-separator {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #ccc;
+      margin: 10px 0;
+      font-size: 1rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .or-separator::before,
+    .or-separator::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid #444;
+      margin: 0 10px;
+    }
+  </style>
 </head>
 <body>
-<div class="card">
-  <h1>Wolf.Business</h1>
-  <p class="price">🔥 Premium Domain For Sale</p>
-  <p class="tagline">👉 “One word. True authority. Real asset”🐺 </p>
-
-  <div class="buttons">
-    <button class="btn" id="showFormBtn">💰 Make an Offer</button>
-    <a class="btn secondary" href="tel:+201276919466">📞 Call Now</a>
+  <div class="card">
+    <h1>Wolf.Business</h1>
+    <p class="price">🔥 Premium Domain For Sale</p>
+    <p class="tagline">👉 “One word. True authority. Real asset”🐺</p>
+    <div class="buttons">
+      <button class="btn" id="showFormBtn">💰 Make an Offer</button>
+      <a class="btn secondary" href="tel:+201276919466">📞 Call Now</a>
+    </div>
+    <form class="offer-form" id="offerForm">
+      <input type="email" id="email" name="email" placeholder="Your Email" />
+      <div class="or-separator">OR</div>
+      <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" />
+      <input type="number" id="offerAmount" name="offer" placeholder="Your Offer (min $20,000)" required />
+      <span id="contactError">⚠️ Please enter at least Email or Phone.</span>
+      <span id="offerError">⚠️ Offer must be at least $20,000!</span>
+      <button type="submit">Send</button>
+    </form>
   </div>
+  <script>
+    const showFormBtn = document.getElementById('showFormBtn');
+    const offerForm = document.getElementById('offerForm');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+    const offerAmount = document.getElementById('offerAmount');
+    const offerError = document.getElementById('offerError');
+    const contactError = document.getElementById('contactError');
 
-  <!-- الفورم -->
-  <form class="offer-form" id="offerForm">
-    <input type="email" id="email" placeholder="Your Email" />
-    <div class="or-separator">OR</div>
-    <input type="tel" id="phone" placeholder="Your Phone Number" />
-    <input type="number" id="offerAmount" placeholder="Your Offer (min $20000)" required />
-    <span id="contactError">⚠️ Please enter at least Email or Phone.</span>
-    <span id="offerError">⚠️ Offer must be at least $20,000!</span>
-    <button type="submit">Send</button>
-  </form>
-</div>
+    showFormBtn.addEventListener('click', () => {
+      offerForm.style.display = offerForm.style.display === 'flex' ? 'none' : 'flex';
+      offerForm.scrollIntoView({ behavior: 'smooth' });
+    });
 
-<script>
-const showFormBtn = document.getElementById('showFormBtn');
-const offerForm = document.getElementById('offerForm');
-const emailInput = document.getElementById('email');
-const phoneInput = document.getElementById('phone');
-const offerAmount = document.getElementById('offerAmount');
-const offerError = document.getElementById('offerError');
-const contactError = document.getElementById('contactError');
+    offerAmount.addEventListener('input', () => {
+      const value = parseFloat(offerAmount.value);
+      if (value < 20000) {
+        offerError.style.display = 'block';
+        offerAmount.classList.add('invalid');
+      } else {
+        offerError.style.display = 'none';
+        offerAmount.classList.remove('invalid');
+      }
+    });
 
-showFormBtn.addEventListener('click', () => {
-  offerForm.style.display = offerForm.style.display === 'flex' ? 'none' : 'flex';
-  offerForm.scrollIntoView({ behavior: 'smooth' });
-});
+    offerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const offerValue = parseFloat(offerAmount.value);
+      const emailValue = emailInput.value.trim();
+      const phoneValue = phoneInput.value.trim();
 
-// Live validation للعرض
-offerAmount.addEventListener('input', () => {
-  const value = parseFloat(offerAmount.value);
-  if (value < 20000) {
-    offerError.style.display = 'block';
-    offerAmount.classList.add('invalid');
-  } else {
-    offerError.style.display = 'none';
-    offerAmount.classList.remove('invalid');
-  }
-});
+      let valid = true;
 
-// التحقق عند إرسال الفورم
-offerForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const offerValue = parseFloat(offerAmount.value);
-  const emailValue = emailInput.value.trim();
-  const phoneValue = phoneInput.value.trim();
+      if (offerValue < 20000) {
+        offerError.style.display = 'block';
+        offerAmount.classList.add('invalid');
+        valid = false;
+      } else {
+        offerError.style.display = 'none';
+        offerAmount.classList.remove('invalid');
+      }
 
-  let valid = true;
+      if (!emailValue && !phoneValue) {
+        contactError.style.display = 'block';
+        valid = false;
+      } else {
+        contactError.style.display = 'none';
+      }
 
-  // تحقق من الحد الأدنى للعرض
-  if (offerValue < 20000) {
-    offerError.style.display = 'block';
-    offerAmount.classList.add('invalid');
-    valid = false;
-  } else {
-    offerError.style.display = 'none';
-    offerAmount.classList.remove('invalid');
-  }
+      if (!valid) return;
 
-  // تحقق من إدخال إما إيميل أو فون أو الاثنين معًا
-  if (!emailValue && !phoneValue) {
-    contactError.style.display = 'block';
-    valid = false;
-  } else {
-    contactError.style.display = 'none';
-  }
+      const formData = new FormData(offerForm);
+      const data = new URLSearchParams(formData);
 
-  if (!valid) return;
-
-  alert('Thanks! Your offer has been sent.');
-  offerForm.reset();
-  offerForm.style.display = 'none';
-});
-</script>
+      fetch('https://script.google.com/macros/s/AKfycbyUkv_VnWrDISnioFI6ovQ_yiXXXTTKaYfJFXC_PD14-sb33UtD6L1jupOiNnpZVi-8/exec', {
+        method: 'POST',
+        body: data
+      })
+      .then(response => response.text())
+      .then(result => {
+        alert(result);
+        offerForm.reset();
+        offerForm.style.display = 'none';
+      })
+      .catch(error => {
+        alert('⚠️ An error occurred while submitting your offer.');
+        console.error(error);
+      });
+    });
+  </script>
 </body>
 </html>
