@@ -22,7 +22,6 @@
     border-radius: 20px;
     padding: 40px 25px;
     max-width: 700px;
-    width: 100%;
     box-shadow: 0 8px 30px rgba(0,0,0,0.5);
     backdrop-filter: blur(8px);
     animation: fadeIn 1s ease;
@@ -58,7 +57,6 @@
   .btn:hover { opacity: 0.9; transform: scale(1.06); }
   .btn.secondary { background: #2d2c3a; border: 1px solid #666; }
 
-  /* Offer form */
   .offer-form {
     display: none;
     flex-direction: column;
@@ -93,15 +91,17 @@
     display: none;
     text-align: left;
   }
-  #successMessage {
-    display: none;
+
+  .success-message {
     margin-top: 20px;
-    color: #4CAF50;
+    padding: 12px;
+    border-radius: 10px;
+    background: #1e4620;
+    color: #b6f7c1;
     font-weight: bold;
-    font-size: 1rem;
+    display: none;
   }
 
-  /* OR Separator */
   .or-separator {
     display: flex;
     align-items: center;
@@ -119,20 +119,6 @@
     border-bottom: 1px solid #444;
     margin: 0 10px;
   }
-
-  /* Mobile responsiveness */
-  @media (max-width: 480px) {
-    .buttons {
-      flex-direction: column;
-      gap: 10px;
-    }
-    .btn, .btn.secondary, .offer-form button {
-      width: 100%;
-    }
-    .offer-form input {
-      width: 100%;
-    }
-  }
 </style>
 </head>
 <body>
@@ -146,18 +132,19 @@
     <a class="btn secondary" href="tel:+201276919466">📞 Call Now</a>
   </div>
 
-  <!-- Offer Form -->
-  <form class="offer-form" id="offerForm">
-    <input type="email" id="email" placeholder="Your Email" />
+  <form class="offer-form" id="offerForm" method="POST">
+    <input type="email" id="email" name="email" placeholder="Your Email" />
     <div class="or-separator">OR</div>
-    <input type="tel" id="phone" placeholder="Your Phone Number" />
-    <input type="number" id="offerAmount" placeholder="Your Offer (min $20000)" required />
+    <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" />
+    <input type="number" id="offerAmount" name="offerAmount" placeholder="Your Offer (min $20000)" required />
     <span id="contactError">⚠️ Please enter at least Email or Phone.</span>
     <span id="offerError">⚠️ Offer must be at least $20,000!</span>
     <button type="submit" id="sendBtn">Send</button>
   </form>
 
-  <p id="successMessage">✅ Your offer has been submitted successfully!</p>
+  <div class="success-message" id="successMessage">
+    ✅ Your offer has been submitted successfully!
+  </div>
 </div>
 
 <script>
@@ -171,17 +158,16 @@ const contactError = document.getElementById('contactError');
 const successMessage = document.getElementById('successMessage');
 const sendBtn = document.getElementById('sendBtn');
 
-showFormBtn.addEventListener('click', () => {
-  // Reset state
-  successMessage.style.display = 'none';
-  sendBtn.disabled = false;
-  sendBtn.textContent = 'Send';
+const scriptURL = "https://script.google.com/macros/s/AKfycbyUkv_VnWrDISnioFI6ovQ_yiXXXTTKaYfJFXC_PD14-sb33UtD6L1jupOiNnpZVi-8/exec";
 
+// Show form
+showFormBtn.addEventListener('click', () => {
   offerForm.style.display = offerForm.style.display === 'flex' ? 'none' : 'flex';
+  successMessage.style.display = 'none'; // hide success if reopening form
   offerForm.scrollIntoView({ behavior: 'smooth' });
 });
 
-// Live validation for offer amount
+// Live validation
 offerAmount.addEventListener('input', () => {
   const value = parseFloat(offerAmount.value);
   if (value < 20000) {
@@ -193,7 +179,7 @@ offerAmount.addEventListener('input', () => {
   }
 });
 
-// Handle form submission
+// On form submit
 offerForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const offerValue = parseFloat(offerAmount.value);
@@ -220,24 +206,22 @@ offerForm.addEventListener('submit', (e) => {
 
   if (!valid) return;
 
-  // Disable button while sending
   sendBtn.disabled = true;
-  sendBtn.textContent = 'Sending...';
+  sendBtn.textContent = "Sending...";
 
-  fetch("https://script.google.com/macros/s/AKfycbyUkv_VnWrDISnioFI6ovQ_yiXXXTTKaYfJFXC_PD14-sb33UtD6L1jupOiNnpZVi-8/exec", {
-    method: "POST",
-    body: new FormData(offerForm)
-  })
-  .then(res => res.text())
-  .then(() => {
-    offerForm.style.display = 'none';
-    successMessage.style.display = 'block';
-  })
-  .catch(() => {
-    alert('❌ Something went wrong. Please try again.');
-    sendBtn.disabled = false;
-    sendBtn.textContent = 'Send';
-  });
+  fetch(scriptURL, { method: 'POST', body: new FormData(offerForm)})
+    .then(() => {
+      offerForm.reset();
+      offerForm.style.display = 'none';
+      successMessage.style.display = 'block';
+      sendBtn.disabled = false;
+      sendBtn.textContent = "Send";
+    })
+    .catch(err => {
+      alert("Error: " + err.message);
+      sendBtn.disabled = false;
+      sendBtn.textContent = "Send";
+    });
 });
 </script>
 </body>
