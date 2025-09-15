@@ -165,6 +165,11 @@ showFormBtn.addEventListener('click', () => {
   successMessage.style.display = 'none'; // hide success when reopening form
   offerForm.style.display = offerForm.style.display === 'flex' ? 'none' : 'flex';
   offerForm.scrollIntoView({ behavior: 'smooth' });
+
+  // reset submit button state when form reopens
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Send';
+  isSubmitted = false;
 });
 
 offerAmount.addEventListener('input', () => {
@@ -189,7 +194,7 @@ offerForm.addEventListener('submit', (e) => {
 
   let valid = true;
 
-  if (offerValue < 20000) {
+  if (offerValue < 40000) {
     offerError.style.display = 'block';
     offerAmount.classList.add('invalid');
     valid = false;
