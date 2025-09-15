@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Wolf.Business</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -56,6 +56,7 @@
   }
   .btn:hover { opacity: 0.9; transform: scale(1.06); }
   .btn.secondary { background: #2d2c3a; border: 1px solid #666; }
+
   .offer-form {
     display: none;
     flex-direction: column;
@@ -68,6 +69,7 @@
     border: none;
     outline: none;
     font-size: 1rem;
+    width: 100%;
   }
   .offer-form input.invalid {
     border: 2px solid #ff7979;
@@ -82,6 +84,7 @@
     font-size: 1rem;
     cursor: pointer;
     transition: 0.3s;
+    width: 100%;
   }
   .offer-form button:hover { opacity: 0.9; transform: scale(1.05); }
   #offerError, #contactError {
@@ -90,12 +93,7 @@
     display: none;
     text-align: left;
   }
-  #successMessage {
-    display: none;
-    color: #4caf50;
-    font-weight: bold;
-    margin-top: 10px;
-  }
+
   .or-separator {
     display: flex;
     align-items: center;
@@ -112,6 +110,17 @@
     flex: 1;
     border-bottom: 1px solid #444;
     margin: 0 10px;
+  }
+
+  #successMessage {
+    display: none;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #2d5936;
+    color: #aef5c3;
+    font-weight: bold;
+    font-size: 1rem;
   }
 </style>
 </head>
@@ -133,12 +142,10 @@
     <input type="number" id="offerAmount" name="offer" placeholder="Your Offer (min $20,000)" required />
     <span id="contactError">⚠️ Please enter at least Email or Phone.</span>
     <span id="offerError">⚠️ Offer must be at least $20,000!</span>
-
-    <!-- ✅ زر الإرسال -->
-    <button type="submit">Send</button>
+    <button type="submit" id="submitBtn">Send</button>
   </form>
 
-  <p id="successMessage"></p>
+  <div id="successMessage"></div>
 </div>
 
 <script>
@@ -150,10 +157,12 @@ const offerAmount = document.getElementById('offerAmount');
 const offerError = document.getElementById('offerError');
 const contactError = document.getElementById('contactError');
 const successMessage = document.getElementById('successMessage');
+const submitBtn = document.getElementById('submitBtn');
 
-let isSubmitted = false; // lock flag
+let isSubmitted = false;
 
 showFormBtn.addEventListener('click', () => {
+  successMessage.style.display = 'none'; // hide success when reopening form
   offerForm.style.display = offerForm.style.display === 'flex' ? 'none' : 'flex';
   offerForm.scrollIntoView({ behavior: 'smooth' });
 });
@@ -172,7 +181,7 @@ offerAmount.addEventListener('input', () => {
 offerForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  if (isSubmitted) return; // prevent multiple submissions
+  if (isSubmitted) return;
 
   const offerValue = parseFloat(offerAmount.value);
   const emailValue = emailInput.value.trim();
@@ -198,7 +207,9 @@ offerForm.addEventListener('submit', (e) => {
 
   if (!valid) return;
 
-  isSubmitted = true; // lock form
+  isSubmitted = true;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
 
   const formData = new FormData(offerForm);
   const data = new URLSearchParams(formData);
@@ -209,7 +220,7 @@ offerForm.addEventListener('submit', (e) => {
   })
   .then(response => response.text())
   .then(result => {
-    successMessage.textContent = result;
+    successMessage.textContent = '✅ Your offer has been submitted successfully!';
     successMessage.style.display = 'block';
     offerForm.reset();
     offerForm.style.display = 'none';
