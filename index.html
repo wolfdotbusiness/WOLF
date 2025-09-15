@@ -136,7 +136,7 @@
     <input type="email" id="email" name="email" placeholder="Your Email" />
     <div class="or-separator">OR</div>
     <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" />
-    <input type="number" id="offerAmount" name="offerAmount" placeholder="Your Offer (min $20000)" required />
+    <input type="number" id="offer" name="offer" placeholder="Your Offer (min $20000)" required />
     <span id="contactError">⚠️ Please enter at least Email or Phone.</span>
     <span id="offerError">⚠️ Offer must be at least $20,000!</span>
     <button type="submit" id="sendBtn">Send</button>
@@ -152,13 +152,13 @@ const showFormBtn = document.getElementById('showFormBtn');
 const offerForm = document.getElementById('offerForm');
 const emailInput = document.getElementById('email');
 const phoneInput = document.getElementById('phone');
-const offerAmount = document.getElementById('offerAmount');
+const offerInput = document.getElementById('offer');
 const offerError = document.getElementById('offerError');
 const contactError = document.getElementById('contactError');
 const successMessage = document.getElementById('successMessage');
 const sendBtn = document.getElementById('sendBtn');
 
-const scriptURL = "https://script.google.com/macros/s/AKfycbyUkv_VnWrDISnioFI6ovQ_yiXXXTTKaYfJFXC_PD14-sb33UtD6L1jupOiNnpZVi-8/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbwhzpPYkM4YMF7zvkvm4kQYN2vT0qDKWbiW5HODBjsLlL3n9P8cipPGexIs3mVD8CNQog/exec";
 
 // Show form
 showFormBtn.addEventListener('click', () => {
@@ -168,21 +168,21 @@ showFormBtn.addEventListener('click', () => {
 });
 
 // Live validation
-offerAmount.addEventListener('input', () => {
-  const value = parseFloat(offerAmount.value);
+offerInput.addEventListener('input', () => {
+  const value = parseFloat(offerInput.value);
   if (value < 20000) {
     offerError.style.display = 'block';
-    offerAmount.classList.add('invalid');
+    offerInput.classList.add('invalid');
   } else {
     offerError.style.display = 'none';
-    offerAmount.classList.remove('invalid');
+    offerInput.classList.remove('invalid');
   }
 });
 
 // On form submit
 offerForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  const offerValue = parseFloat(offerAmount.value);
+  const offerValue = parseFloat(offerInput.value);
   const emailValue = emailInput.value.trim();
   const phoneValue = phoneInput.value.trim();
 
@@ -190,11 +190,11 @@ offerForm.addEventListener('submit', (e) => {
 
   if (offerValue < 20000) {
     offerError.style.display = 'block';
-    offerAmount.classList.add('invalid');
+    offerInput.classList.add('invalid');
     valid = false;
   } else {
     offerError.style.display = 'none';
-    offerAmount.classList.remove('invalid');
+    offerInput.classList.remove('invalid');
   }
 
   if (!emailValue && !phoneValue) {
