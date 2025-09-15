@@ -33,7 +33,7 @@
     to { opacity: 1; transform: translateY(0); }
   }
   h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-size: clamp(2.2rem, 6vw, 3.5rem);
     font-weight: bold;
     background: linear-gradient(90deg, #f26b6b, #c26cc5);
     -webkit-background-clip: text;
@@ -120,25 +120,18 @@
     margin: 0 10px;
   }
 
-  /* Responsive Levels */
+  /* Mobile responsiveness */
   @media (max-width: 480px) {
-    .card { padding: 25px 15px; }
-    h1 { font-size: 1.8rem; }
-    .buttons { flex-direction: column; gap: 10px; }
-    .btn, .btn.secondary, .offer-form button, .offer-form input {
+    .buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn, .btn.secondary, .offer-form button {
       width: 100%;
     }
-  }
-
-  @media (min-width: 481px) and (max-width: 768px) {
-    .card { max-width: 90%; }
-    .buttons { flex-wrap: wrap; }
-    .btn, .btn.secondary { flex: 1 1 calc(50% - 10px); }
-    .offer-form input, .offer-form button { width: 100%; }
-  }
-
-  @media (min-width: 769px) {
-    .card { max-width: 700px; }
+    .offer-form input {
+      width: 100%;
+    }
   }
 </style>
 </head>
