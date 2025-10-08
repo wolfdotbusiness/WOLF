@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Wolf.Business</title>
+<title>Wolf.Business — Premium Domain For Sale</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -19,33 +19,52 @@
   }
   .card {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 40px 25px;
-    max-width: 700px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    border-radius: 24px;
+    padding: 50px 30px;
+    max-width: 720px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.55);
     backdrop-filter: blur(8px);
     animation: fadeIn 1s ease;
     position: relative;
   }
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(25px); }
     to { opacity: 1; transform: translateY(0); }
   }
   h1 {
-    font-size: clamp(2.2rem, 6vw, 3.5rem);
-    font-weight: bold;
+    font-size: clamp(2.3rem, 6vw, 3.6rem);
+    font-weight: 800;
     background: linear-gradient(90deg, #f26b6b, #c26cc5);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 0.3em;
+    letter-spacing: 1px;
   }
-  .price { font-size: 1.5rem; color: #ff7979; margin-bottom: 0.8em; font-weight: bold; }
-  .tagline { font-size: 1.1rem; margin-bottom: 2em; color: #aaa; line-height: 1.6; }
-  .buttons { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+  .price {
+    font-size: 1.6rem;
+    color: #ff7979;
+    margin-bottom: 1em;
+    font-weight: bold;
+  }
+  .tagline {
+    font-size: 1.2rem;
+    margin-bottom: 2em;
+    color: #bdbdbd;
+    line-height: 1.8;
+    font-weight: 500;
+  }
+  .tagline strong { color: #fff; }
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 1em;
+  }
   .btn {
     background: linear-gradient(90deg, #f26b6b, #c26cc5);
     color: #fff;
-    padding: 14px 28px;
+    padding: 14px 30px;
     border-radius: 40px;
     text-decoration: none;
     font-weight: bold;
@@ -55,13 +74,15 @@
     cursor: pointer;
   }
   .btn:hover { opacity: 0.9; transform: scale(1.06); }
-  .btn.secondary { background: #2d2c3a; border: 1px solid #666; }
-
+  .btn.secondary {
+    background: #2d2c3a;
+    border: 1px solid #666;
+  }
   .offer-form {
     display: none;
     flex-direction: column;
     gap: 15px;
-    margin-top: 20px;
+    margin-top: 25px;
   }
   .offer-form input {
     padding: 12px 15px;
@@ -71,9 +92,7 @@
     font-size: 1rem;
     width: 100%;
   }
-  .offer-form input.invalid {
-    border: 2px solid #ff7979;
-  }
+  .offer-form input.invalid { border: 2px solid #ff7979; }
   .offer-form button {
     padding: 12px 15px;
     border-radius: 40px;
@@ -93,7 +112,6 @@
     display: none;
     text-align: left;
   }
-
   .or-separator {
     display: flex;
     align-items: center;
@@ -111,7 +129,6 @@
     border-bottom: 1px solid #444;
     margin: 0 10px;
   }
-
   #successMessage {
     display: none;
     margin-top: 20px;
@@ -128,7 +145,12 @@
 <div class="card">
   <h1>Wolf.Business</h1>
   <p class="price">🔥 Premium Domain For Sale</p>
-  <p class="tagline">👉 “One word. Authority. Prestige. Asset”🐺 </p>
+  
+  <p class="tagline">
+    🐺 <strong>One Word</strong> — Short (4 Letters), 1 Syllable, Dictionary Word.<br>
+    <strong>Authority.</strong> <strong>Prestige.</strong> <strong>Asset.</strong><br><br>
+    A rare and powerful digital brand for elite businesses & visionary leaders.
+  </p>
 
   <div class="buttons">
     <button class="btn" id="showFormBtn">💰 Make an Offer</button>
@@ -139,9 +161,9 @@
     <input type="email" id="email" name="email" placeholder="Your Email" />
     <div class="or-separator">OR</div>
     <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" />
-    <input type="number" id="offerAmount" name="offer" placeholder="Your Offer (min $100,000)" required />
+    <input type="number" id="offerAmount" name="offer" placeholder="Your Offer (min $20,000)" required />
     <span id="contactError">⚠️ Please enter at least Email or Phone.</span>
-    <span id="offerError">⚠️ Offer must be at least $100,000!</span>
+    <span id="offerError">⚠️ Offer must be at least $20,000!</span>
     <button type="submit" id="submitBtn">Send</button>
   </form>
 
@@ -158,15 +180,12 @@ const offerError = document.getElementById('offerError');
 const contactError = document.getElementById('contactError');
 const successMessage = document.getElementById('successMessage');
 const submitBtn = document.getElementById('submitBtn');
-
 let isSubmitted = false;
 
 showFormBtn.addEventListener('click', () => {
-  successMessage.style.display = 'none'; // hide success when reopening form
+  successMessage.style.display = 'none';
   offerForm.style.display = offerForm.style.display === 'flex' ? 'none' : 'flex';
   offerForm.scrollIntoView({ behavior: 'smooth' });
-
-  // reset submit button state when form reopens
   submitBtn.disabled = false;
   submitBtn.textContent = 'Send';
   isSubmitted = false;
@@ -185,13 +204,10 @@ offerAmount.addEventListener('input', () => {
 
 offerForm.addEventListener('submit', (e) => {
   e.preventDefault();
-
   if (isSubmitted) return;
-
   const offerValue = parseFloat(offerAmount.value);
   const emailValue = emailInput.value.trim();
   const phoneValue = phoneInput.value.trim();
-
   let valid = true;
 
   if (offerValue < 20000) {
@@ -202,14 +218,12 @@ offerForm.addEventListener('submit', (e) => {
     offerError.style.display = 'none';
     offerAmount.classList.remove('invalid');
   }
-
   if (!emailValue && !phoneValue) {
     contactError.style.display = 'block';
     valid = false;
   } else {
     contactError.style.display = 'none';
   }
-
   if (!valid) return;
 
   isSubmitted = true;
@@ -224,20 +238,16 @@ offerForm.addEventListener('submit', (e) => {
     body: data
   })
   .then(response => response.text())
-  .then(result => {
+  .then(() => {
     successMessage.textContent = '✅ Your offer has been submitted successfully!';
     successMessage.style.display = 'block';
     offerForm.reset();
     offerForm.style.display = 'none';
   })
-  .catch(error => {
+  .catch(() => {
     alert('⚠️ An error occurred while submitting your offer.');
-    console.error(error);
   });
 });
 </script>
 </body>
 </html>
-
-
-
