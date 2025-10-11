@@ -31,9 +31,7 @@
     transition: 0.4s ease;
   }
 
-  .card:hover {
-    transform: scale(1.02);
-  }
+  .card:hover { transform: scale(1.02); }
 
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(25px); }
@@ -65,20 +63,21 @@
     margin-top: 1em;
   }
 
-  .domain-points li {
-    display: block;
-    margin: 14px 0;
+  /* أول نقطة في النص */
+  .domain-points li.nowrap {
     font-size: 1.5rem;
     font-weight: 700;
     color: #fff;
+    margin-bottom: 1em;
   }
 
-  .domain-points li.nowrap {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    display: inline-block;
+  /* الثلاث نقاط الباقيين بمحاذاة لليسار */
+  .domain-points li:not(.nowrap) {
+    text-align: left;
+    margin: 10px 0 10px 2em;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
   }
 
   @media (max-width: 720px) {
