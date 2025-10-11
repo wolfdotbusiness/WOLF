@@ -53,7 +53,21 @@
     line-height: 1.8;
     font-weight: 500;
   }
-  .tagline strong { color: #fff; }
+
+  /* ✅ النقاط المنسقة */
+  .domain-points {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+    align-items: flex-start;
+    max-width: 500px;
+    text-align: left;
+  }
+  .domain-points li strong { color: #fff; }
+
   .buttons {
     display: flex;
     justify-content: center;
@@ -146,12 +160,12 @@
   <h1>Wolf.Business</h1>
   <p class="price">🔥 Premium Domain For Sale</p>
   
-  <p class="tagline">
-    🐺 <strong>One Word</strong>👉 Short (4 Letters), 1 Syllable, Dictionary Word.<br>
-   🐺 <strong>Asset.</strong><br>
-   🐺 <strong>Authority.</strong><br>
-   🐺 <strong>Prestige.</strong><br>
-  </p>
+  <ul class="domain-points">
+    <li>🐺 <strong>One Word</strong> — Short (4 Letters), 1 Syllable, Dictionary Word.</li>
+    <li>🐺 <strong>Asset.</strong></li>
+    <li>🐺 <strong>Authority.</strong></li>
+    <li>🐺 <strong>Prestige.</strong></li>
+  </ul>
 
   <div class="buttons">
     <button class="btn" id="showFormBtn">💰 Make an Offer</button>
@@ -252,4 +266,3 @@ offerForm.addEventListener('submit', (e) => {
 </script>
 </body>
 </html>
-
