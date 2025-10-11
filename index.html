@@ -46,26 +46,35 @@
     margin-bottom: 1em;
     font-weight: bold;
   }
+  .tagline {
+    font-size: 1.3rem;
+    margin-bottom: 2em;
+    color: #bdbdbd;
+    line-height: 1.8;
+    font-weight: 700;
+  }
 
-  /* ✅ النقاط المنسقة بخط كبير وواضح */
+  /* القائمة الجديدة */
   .domain-points {
     list-style: none;
     padding: 0;
-    margin: 0 auto 2em;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8em;
-    align-items: flex-start;
-    max-width: 500px;
-    text-align: left;
-    font-size: 1.3rem;          /* حجم الخط أكبر */
-    font-weight: 700;           /* خط Bold */
-    color: #f0f0f0;             /* لون أوضح */
-    line-height: 1.8;
+    margin-top: 1em;
   }
-  .domain-points li strong { 
-    color: #fff; 
-    font-weight: 800;           /* زيادة Bold للكلمات البارزة */
+  .domain-points li {
+    margin: 10px 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .domain-points li.nowrap {
+    white-space: nowrap; /* يمنع كسر السطر */
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media (max-width: 480px) {
+    .domain-points li.nowrap {
+      font-size: 1.1rem;
+    }
   }
 
   .buttons {
@@ -159,9 +168,9 @@
 <div class="card">
   <h1>Wolf.Business</h1>
   <p class="price">🔥 Premium Domain For Sale</p>
-  
+
   <ul class="domain-points">
-    <li>🐺 <strong>One Word</strong> — Short (4 Letters), 1 Syllable, Dictionary Word.</li>
+    <li class="nowrap">🐺 <strong>One Word</strong> — Short (4 Letters), 1 Syllable, Dictionary Word.</li>
     <li>🐺 <strong>Asset.</strong></li>
     <li>🐺 <strong>Authority.</strong></li>
     <li>🐺 <strong>Prestige.</strong></li>
@@ -266,4 +275,3 @@ offerForm.addEventListener('submit', (e) => {
 </script>
 </body>
 </html>
-
