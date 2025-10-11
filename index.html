@@ -44,25 +44,18 @@
   .price {
     font-size: 1.6rem;
     color: #ff7979;
-    margin-bottom: 1em;
+    margin-bottom: 1.5em;
     font-weight: bold;
   }
-  .tagline {
-    font-size: 1.3rem;
-    margin-bottom: 2em;
-    color: #bdbdbd;
-    line-height: 1.8;
-    font-weight: 700;
-  }
 
-  /* القائمة */
+  /* النقاط */
   .domain-points {
     list-style: none;
     padding: 0;
     margin-top: 1em;
   }
   .domain-points li {
-    margin: 10px 0;
+    margin: 12px 0;
     font-size: 1.4rem;
     font-weight: 700;
     color: #fff;
@@ -70,7 +63,7 @@
 
   /* الجملة الطويلة */
   .domain-points li.nowrap {
-    white-space: nowrap;        /* صف واحد على الديسكتوب */
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
@@ -79,7 +72,7 @@
 
   @media (max-width: 720px) {
     .domain-points li.nowrap {
-      white-space: normal;      /* يسمح بالكسر في الموبايل */
+      white-space: normal;
       font-size: 1.1rem;
       line-height: 1.5;
     }
@@ -88,88 +81,21 @@
   .buttons {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-bottom: 1em;
+    margin-top: 2em;
   }
   .btn {
     background: linear-gradient(90deg, #f26b6b, #c26cc5);
     color: #fff;
-    padding: 14px 30px;
+    padding: 16px 40px;
     border-radius: 40px;
     text-decoration: none;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.2rem;
     transition: 0.3s;
     box-shadow: 0 6px 20px rgba(0,0,0,0.4);
     cursor: pointer;
   }
   .btn:hover { opacity: 0.9; transform: scale(1.06); }
-  .btn.secondary {
-    background: #2d2c3a;
-    border: 1px solid #666;
-  }
-  .offer-form {
-    display: none;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 25px;
-  }
-  .offer-form input {
-    padding: 12px 15px;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    font-size: 1rem;
-    width: 100%;
-  }
-  .offer-form input.invalid { border: 2px solid #ff7979; }
-  .offer-form button {
-    padding: 12px 15px;
-    border-radius: 40px;
-    border: none;
-    background: linear-gradient(90deg, #f26b6b, #c26cc5);
-    color: #fff;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.3s;
-    width: 100%;
-  }
-  .offer-form button:hover { opacity: 0.9; transform: scale(1.05); }
-  #offerError, #contactError {
-    color: #ff7979;
-    font-size: 0.9rem;
-    display: none;
-    text-align: left;
-  }
-  .or-separator {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #ccc;
-    margin: 10px 0;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  .or-separator::before,
-  .or-separator::after {
-    content: "";
-    flex: 1;
-    border-bottom: 1px solid #444;
-    margin: 0 10px;
-  }
-  #successMessage {
-    display: none;
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 10px;
-    background: #2d5936;
-    color: #aef5c3;
-    font-weight: bold;
-    font-size: 1rem;
-  }
 </style>
 </head>
 <body>
@@ -185,101 +111,8 @@
   </ul>
 
   <div class="buttons">
-    <button class="btn" id="showFormBtn">💰 Make an Offer</button>
-    <a class="btn secondary" href="tel:+201276919466">📞 Call Now</a>
+    <a class="btn" href="tel:+201276919466">📞 Call Now</a>
   </div>
-
-  <form class="offer-form" id="offerForm">
-    <input type="email" id="email" name="email" placeholder="Your Email" />
-    <div class="or-separator">OR</div>
-    <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" />
-    <input type="number" id="offerAmount" name="offer" placeholder="Your Offer (min $20,000)" required />
-    <span id="contactError">⚠️ Please enter at least Email or Phone.</span>
-    <span id="offerError">⚠️ Offer must be at least $20,000!</span>
-    <button type="submit" id="submitBtn">Send</button>
-  </form>
-
-  <div id="successMessage"></div>
 </div>
-
-<script>
-const showFormBtn = document.getElementById('showFormBtn');
-const offerForm = document.getElementById('offerForm');
-const emailInput = document.getElementById('email');
-const phoneInput = document.getElementById('phone');
-const offerAmount = document.getElementById('offerAmount');
-const offerError = document.getElementById('offerError');
-const contactError = document.getElementById('contactError');
-const successMessage = document.getElementById('successMessage');
-const submitBtn = document.getElementById('submitBtn');
-let isSubmitted = false;
-
-showFormBtn.addEventListener('click', () => {
-  successMessage.style.display = 'none';
-  offerForm.style.display = offerForm.style.display === 'flex' ? 'none' : 'flex';
-  offerForm.scrollIntoView({ behavior: 'smooth' });
-  submitBtn.disabled = false;
-  submitBtn.textContent = 'Send';
-  isSubmitted = false;
-});
-
-offerAmount.addEventListener('input', () => {
-  const value = parseFloat(offerAmount.value);
-  if (value < 20000) {
-    offerError.style.display = 'block';
-    offerAmount.classList.add('invalid');
-  } else {
-    offerError.style.display = 'none';
-    offerAmount.classList.remove('invalid');
-  }
-});
-
-offerForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  if (isSubmitted) return;
-  const offerValue = parseFloat(offerAmount.value);
-  const emailValue = emailInput.value.trim();
-  const phoneValue = phoneInput.value.trim();
-  let valid = true;
-
-  if (offerValue < 20000) {
-    offerError.style.display = 'block';
-    offerAmount.classList.add('invalid');
-    valid = false;
-  } else {
-    offerError.style.display = 'none';
-    offerAmount.classList.remove('invalid');
-  }
-  if (!emailValue && !phoneValue) {
-    contactError.style.display = 'block';
-    valid = false;
-  } else {
-    contactError.style.display = 'none';
-  }
-  if (!valid) return;
-
-  isSubmitted = true;
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Sending...';
-
-  const formData = new FormData(offerForm);
-  const data = new URLSearchParams(formData);
-
-  fetch('https://script.google.com/macros/s/AKfycbyUkv_VnWrDISnioFI6ovQ_yiXXXTTKaYfJFXC_PD14-sb33UtD6L1jupOiNnpZVi-8/exec', {
-    method: 'POST',
-    body: data
-  })
-  .then(response => response.text())
-  .then(() => {
-    successMessage.textContent = '✅ Your offer has been submitted successfully!';
-    successMessage.style.display = 'block';
-    offerForm.reset();
-    offerForm.style.display = 'none';
-  })
-  .catch(() => {
-    alert('⚠️ An error occurred while submitting your offer.');
-  });
-});
-</script>
 </body>
 </html>
