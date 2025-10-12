@@ -16,144 +16,117 @@
     align-items: center;
     min-height: 100vh;
     text-align: center;
-    padding: 20px;
+    padding: 16px;
   }
 
-  /* Container card */
   .card {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 28px;
-    padding: clamp(28px, 4.5vw, 60px) clamp(18px, 4vw, 50px);
-    max-width: 1100px;
-    width: min(95%, 1100px);
-    box-shadow: 0 10px 35px rgba(0,0,0,0.55);
-    backdrop-filter: blur(10px);
-    animation: fadeIn 0.9s ease;
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    border-radius: 24px;
+    padding: 32px 20px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .card:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 18px 45px rgba(0,0,0,0.55); }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(18px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  .card:hover { transform: scale(1.02); box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
 
   h1 {
-    font-size: clamp(2.4rem, 8vw, 4.8rem);
+    font-size: 2.2rem;
     font-weight: 900;
     background: linear-gradient(90deg, #ff8686, #ff7979);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 0.25em;
-    letter-spacing: 1.2px;
+    margin-bottom: 0.3em;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    text-shadow: 0 3px 20px rgba(0, 0, 0, 0.6);
-    line-height: 1;
-    word-break: break-word;
   }
 
   .price {
-    font-size: clamp(1.1rem, 2.6vw, 1.8rem);
+    font-size: 1.2rem;
     color: #ff8686;
-    margin-bottom: 0.9em;
-    font-weight: 700;
+    margin-bottom: 1em;
+    font-weight: bold;
   }
 
   .domain-points {
     list-style: none;
     padding: 0;
-    margin-top: 0.8em;
-    display: block;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: 1em;
   }
 
   .domain-points li {
     text-align: left;
-    margin: 10px 0 10px 1.4em;
-    font-size: clamp(1rem, 1.8vw, 1.4rem);
+    margin: 8px 0 8px 1em;
+    font-size: 1rem;
     font-weight: 700;
     color: #fff;
-    display: block;
   }
 
-  /* keep the first item visually a bit larger but allow wrapping */
   .domain-points li.nowrap {
-    white-space: normal;
-    font-size: clamp(1.05rem, 2vw, 1.5rem);
-    color: #fff;
-    margin-bottom: 0.5em;
+    font-size: 1.1rem;
   }
 
-  /* make bullets aligned nicely on small screens */
-  .domain-points li::marker { color: transparent; }
-
-  /* Buttons
-     - use gap and allow wrapping
-     - stack vertically on small screens */
   .buttons {
     display: flex;
     justify-content: center;
-    gap: clamp(10px, 2vw, 18px);
-    margin-top: 1.6em;
-    flex-wrap: wrap;
+    margin-top: 1.5em;
   }
 
   .btn {
     background: linear-gradient(90deg, #ff6b6b, #c26cc5);
     color: #fff;
-    padding: clamp(10px, 1.6vw, 16px) clamp(20px, 3.5vw, 42px);
+    padding: 12px 28px;
     border-radius: 40px;
     text-decoration: none;
-    font-weight: 700;
-    font-size: clamp(0.95rem, 1.8vw, 1.2rem);
-    transition: transform 0.2s ease, opacity 0.2s ease;
-    box-shadow: 0 6px 25px rgba(0,0,0,0.4);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: 0.3s;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
   }
 
-  .btn:active { transform: translateY(1px); }
-  .btn:hover { opacity: 0.95; transform: scale(1.03); }
+  .btn:hover { opacity: 0.9; transform: scale(1.06); }
 
-  /* smaller screens adjustments */
-  @media (max-width: 520px) {
-    body { padding: 14px; }
-    .card { width: 100%; padding: 28px 18px; }
-    .domain-points { max-width: 100%; }
-    .domain-points li { margin-left: 1em; }
-    .buttons { flex-direction: column; align-items: stretch; }
-    .btn { width: 100%; justify-content: center; }
+  /* Larger screens */
+  @media (min-width: 600px) {
+    .card {
+      max-width: 600px;
+      padding: 40px 30px;
+    }
+
+    h1 { font-size: 3rem; }
+    .price { font-size: 1.4rem; }
+    .domain-points li { font-size: 1.2rem; }
   }
 
-  /* very large screens */
-  @media (min-width: 1400px) {
-    .card { max-width: 1200px; }
-    .domain-points { max-width: 900px; }
-  }
+  @media (min-width: 992px) {
+    .card {
+      max-width: 860px;
+      padding: 60px 50px;
+    }
 
+    h1 { font-size: 4rem; }
+    .price { font-size: 1.6rem; }
+    .domain-points li { font-size: 1.4rem; }
+  }
 </style>
 </head>
-
 <body>
-<div class="card" role="region" aria-label="Premium domain card">
-  <h1>WOLF.BUSINESS</h1>
-  <p class="price">🔥 Premium Domain For Sale</p>
+  <div class="card">
+    <h1>WOLF.BUSINESS</h1>
+    <p class="price">🔥 Premium Domain For Sale</p>
 
-  <ul class="domain-points">
-    <li class="nowrap">🐺 <strong>One Word</strong> 👉 Short (4 Letters), 1 Syllable, Dictionary Word.</li>
-    <li>🐺 <strong>Asset</strong></li>
-    <li>🐺 <strong>Authority</strong></li>
-    <li>🐺 <strong>Prestige</strong></li>
-  </ul>
+    <ul class="domain-points">
+      <li class="nowrap">🐺 <strong>One Word</strong> 👉 Short (4 Letters), 1 Syllable, Dictionary Word.</li>
+      <li>🐺 <strong>Asset</strong></li>
+      <li>🐺 <strong>Authority</strong></li>
+      <li>🐺 <strong>Prestige</strong></li>
+    </ul>
 
-  <div class="buttons">
-    <a class="btn" href="tel:+201276919466" aria-label="Call now">📞 Call Now</a>
+    <div class="buttons">
+      <a class="btn" href="tel:+201276919466">📞 Call Now</a>
+    </div>
   </div>
-</div>
 </body>
 </html>
