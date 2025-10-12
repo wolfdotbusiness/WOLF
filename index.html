@@ -19,101 +19,128 @@
     padding: 20px;
   }
 
+  /* Container card */
   .card {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 28px;
-    padding: 60px 50px;
-    max-width: 1000px;
-    width: 95%;
+    padding: clamp(28px, 4.5vw, 60px) clamp(18px, 4vw, 50px);
+    max-width: 1100px;
+    width: min(95%, 1100px);
     box-shadow: 0 10px 35px rgba(0,0,0,0.55);
     backdrop-filter: blur(10px);
-    animation: fadeIn 1s ease;
-    transition: 0.4s ease;
+    animation: fadeIn 0.9s ease;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
   }
 
-  .card:hover { transform: scale(1.02); }
+  .card:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 18px 45px rgba(0,0,0,0.55); }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(25px); }
+    from { opacity: 0; transform: translateY(18px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   h1 {
-    font-size: clamp(3rem, 8vw, 5rem);
+    font-size: clamp(2.4rem, 8vw, 4.8rem);
     font-weight: 900;
     background: linear-gradient(90deg, #ff8686, #ff7979);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 0.3em;
-    letter-spacing: 1.5px;
+    margin-bottom: 0.25em;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
     text-shadow: 0 3px 20px rgba(0, 0, 0, 0.6);
+    line-height: 1;
+    word-break: break-word;
   }
 
   .price {
-    font-size: 1.8rem;
+    font-size: clamp(1.1rem, 2.6vw, 1.8rem);
     color: #ff8686;
-    margin-bottom: 1.2em;
-    font-weight: bold;
+    margin-bottom: 0.9em;
+    font-weight: 700;
   }
 
   .domain-points {
     list-style: none;
     padding: 0;
-    margin-top: 1em;
+    margin-top: 0.8em;
+    display: block;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .domain-points li {
     text-align: left;
-    margin: 10px 0 10px 1.8em;
-    font-size: 1.4rem;
+    margin: 10px 0 10px 1.4em;
+    font-size: clamp(1rem, 1.8vw, 1.4rem);
     font-weight: 700;
     color: #fff;
+    display: block;
   }
 
+  /* keep the first item visually a bit larger but allow wrapping */
   .domain-points li.nowrap {
     white-space: normal;
-    font-size: 1.5rem;
+    font-size: clamp(1.05rem, 2vw, 1.5rem);
     color: #fff;
-    margin-bottom: 0.6em;
+    margin-bottom: 0.5em;
   }
 
-  @media (max-width: 720px) {
-    .card {
-      padding: 40px 25px;
-    }
-    .domain-points li {
-      font-size: 1.1rem;
-      margin-left: 1.2em;
-    }
-    .price { font-size: 1.4rem; }
-  }
+  /* make bullets aligned nicely on small screens */
+  .domain-points li::marker { color: transparent; }
 
+  /* Buttons
+     - use gap and allow wrapping
+     - stack vertically on small screens */
   .buttons {
     display: flex;
     justify-content: center;
-    margin-top: 2em;
+    gap: clamp(10px, 2vw, 18px);
+    margin-top: 1.6em;
+    flex-wrap: wrap;
   }
 
   .btn {
     background: linear-gradient(90deg, #ff6b6b, #c26cc5);
     color: #fff;
-    padding: 16px 42px;
+    padding: clamp(10px, 1.6vw, 16px) clamp(20px, 3.5vw, 42px);
     border-radius: 40px;
     text-decoration: none;
-    font-weight: bold;
-    font-size: 1.2rem;
-    transition: 0.3s;
+    font-weight: 700;
+    font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+    transition: transform 0.2s ease, opacity 0.2s ease;
     box-shadow: 0 6px 25px rgba(0,0,0,0.4);
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
   }
 
-  .btn:hover { opacity: 0.9; transform: scale(1.06); }
+  .btn:active { transform: translateY(1px); }
+  .btn:hover { opacity: 0.95; transform: scale(1.03); }
+
+  /* smaller screens adjustments */
+  @media (max-width: 520px) {
+    body { padding: 14px; }
+    .card { width: 100%; padding: 28px 18px; }
+    .domain-points { max-width: 100%; }
+    .domain-points li { margin-left: 1em; }
+    .buttons { flex-direction: column; align-items: stretch; }
+    .btn { width: 100%; justify-content: center; }
+  }
+
+  /* very large screens */
+  @media (min-width: 1400px) {
+    .card { max-width: 1200px; }
+    .domain-points { max-width: 900px; }
+  }
+
 </style>
 </head>
 
 <body>
-<div class="card">
+<div class="card" role="region" aria-label="Premium domain card">
   <h1>WOLF.BUSINESS</h1>
   <p class="price">🔥 Premium Domain For Sale</p>
 
@@ -125,7 +152,7 @@
   </ul>
 
   <div class="buttons">
-    <a class="btn" href="tel:+201276919466">📞 Call Now</a>
+    <a class="btn" href="tel:+201276919466" aria-label="Call now">📞 Call Now</a>
   </div>
 </div>
 </body>
