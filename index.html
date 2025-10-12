@@ -6,10 +6,11 @@
 <title>Wolf.Business</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
     background: radial-gradient(circle at top, #1e1b2e, #0d0c17);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #ddd;
+    color: #eee;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,14 +21,13 @@
 
   .card {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 24px;
-    padding: 50px 30px;
-    max-width: 860px;
-    width: 100%;
+    border-radius: 28px;
+    padding: 60px 50px;
+    max-width: 1000px;
+    width: 95%;
     box-shadow: 0 10px 35px rgba(0,0,0,0.55);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
     animation: fadeIn 1s ease;
-    position: relative;
     transition: 0.4s ease;
   }
 
@@ -38,55 +38,55 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-h1 {
-  font-size: clamp(3rem, 8vw, 5rem);
-  font-weight: 900;
-  background: linear-gradient(90deg, #f26b6b, #c26cc5);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 0.3em;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.6);
-}
+  h1 {
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 900;
+    background: linear-gradient(90deg, #ff8686, #ff7979);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.3em;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-shadow: 0 3px 20px rgba(0, 0, 0, 0.6);
+  }
 
   .price {
-    font-size: 1.6rem;
-    color: #ff7979;
-    margin-bottom: 1.5em;
+    font-size: 1.8rem;
+    color: #ff8686;
+    margin-bottom: 1.2em;
     font-weight: bold;
   }
 
-  /* النقاط */
   .domain-points {
     list-style: none;
     padding: 0;
     margin-top: 1em;
   }
 
-  /* أول نقطة في النص */
-  .domain-points li.nowrap {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 1em;
-  }
-
-  /* الثلاث نقاط الباقيين بمحاذاة لليسار */
-  .domain-points li:not(.nowrap) {
+  .domain-points li {
     text-align: left;
-    margin: 10px 0 10px 2em;
+    margin: 10px 0 10px 1.8em;
     font-size: 1.4rem;
     font-weight: 700;
     color: #fff;
   }
 
+  .domain-points li.nowrap {
+    white-space: normal;
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 0.6em;
+  }
+
   @media (max-width: 720px) {
-    .domain-points li.nowrap {
-      white-space: normal;
-      font-size: 1.1rem;
-      line-height: 1.5;
+    .card {
+      padding: 40px 25px;
     }
+    .domain-points li {
+      font-size: 1.1rem;
+      margin-left: 1.2em;
+    }
+    .price { font-size: 1.4rem; }
   }
 
   .buttons {
@@ -96,25 +96,25 @@ h1 {
   }
 
   .btn {
-    background: linear-gradient(90deg, #f26b6b, #c26cc5);
+    background: linear-gradient(90deg, #ff6b6b, #c26cc5);
     color: #fff;
-    padding: 16px 40px;
+    padding: 16px 42px;
     border-radius: 40px;
     text-decoration: none;
     font-weight: bold;
     font-size: 1.2rem;
     transition: 0.3s;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.4);
     cursor: pointer;
   }
 
   .btn:hover { opacity: 0.9; transform: scale(1.06); }
-
 </style>
 </head>
+
 <body>
 <div class="card">
-  <h1>Wolf.Business</h1>
+  <h1>WOLF.BUSINESS</h1>
   <p class="price">🔥 Premium Domain For Sale</p>
 
   <ul class="domain-points">
@@ -130,7 +130,3 @@ h1 {
 </div>
 </body>
 </html>
-
-
-
-
