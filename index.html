@@ -61,22 +61,15 @@
     font-weight: 700;
   }
 
-  .domain-points {
-    list-style: none;
-    padding: 0;
-    margin-top: 0.8em;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-  }
-
-  .domain-points li {
-    margin: 10px 0;
-    font-size: clamp(0.95rem, 2.8vw, 1.4rem);
+  .domain-line {
+    font-size: clamp(1rem, 2.6vw, 1.5rem);
     font-weight: 600;
     color: #fff;
-    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    margin: 0 auto 1.2em;
   }
 
   .buttons {
@@ -112,15 +105,14 @@
     .card { padding: 24px 16px; }
     h1 { font-size: 2rem; line-height: 1.1; }
     .price { font-size: 1.1rem; }
-    .domain-points { text-align: center; }
-    .domain-points li { font-size: 1rem; }
+    .domain-line { font-size: 0.95rem; white-space: normal; }
     .buttons { flex-direction: column; align-items: stretch; gap: 12px; }
     .btn { width: 100%; }
   }
 
   @media (min-width: 1400px) {
     .card { max-width: 1200px; }
-    .domain-points { max-width: 900px; }
+    .domain-line { max-width: 900px; }
   }
 
 </style>
@@ -131,12 +123,7 @@
     <h1>WOLF.BUSINESS</h1>
     <p class="price">🐺 Premium Domain For Sale</p>
 
-    <ul class="domain-points">
-      <li>🐾 <strong>One Word</strong> – Short, 4 Letters, Dictionary Word.</li>
-      <li>🐾 <strong>Asset</strong></li>
-      <li>🐾 <strong>Authority</strong></li>
-      <li>🐾 <strong>Prestige</strong></li>
-    </ul>
+    <p class="domain-line">A one-word, four-letter, one-syllable dictionary domain — a rare and powerful digital asset.</p>
 
     <div class="buttons">
       <a class="btn" href="tel:+201276919466">📞 Call Now</a>
