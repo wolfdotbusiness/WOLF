@@ -57,8 +57,15 @@
   .price {
     font-size: clamp(1.1rem, 3.5vw, 1.8rem);
     color: #ff8686;
-    margin-bottom: 1em;
+    margin-bottom: 0.4em;
     font-weight: 700;
+  }
+
+  .tagline {
+    font-size: clamp(0.9rem, 2.2vw, 1.2rem);
+    color: #ccc;
+    margin-bottom: 1em;
+    font-style: italic;
   }
 
   .domain-line {
@@ -110,6 +117,7 @@
     .card { padding: 24px 16px; }
     h1 { font-size: 2rem; line-height: 1.1; }
     .price { font-size: 1.1rem; }
+    .tagline { font-size: 0.95rem; }
     .domain-line { font-size: 0.95rem; white-space: normal; overflow: visible; }
     .buttons { flex-direction: column; align-items: stretch; gap: 12px; }
     .btn { width: 100%; }
@@ -121,7 +129,8 @@
 <body>
   <div class="card" role="region" aria-label="Premium domain card">
     <h1>WOLF.BUSINESS</h1>
-    <p class="price"> Premium Domain For Sale</p>
+    <p class="price">Premium Domain For Sale</p>
+    <p class="tagline">Where strength meets strategy.</p>
 
     <p class="domain-line">A premium one-word, four-letter, one-syllable dictionary domain, a rare and powerful digital asset.🐺</p>
 
@@ -131,4 +140,3 @@
   </div>
 </body>
 </html>
-
