@@ -3,141 +3,205 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Wolf.Business</title>
+<meta name="description" content="Acquire the strategic brand asset WOLF.BUSINESS — a premium, globally recognizable, one-word brand name.">
+<title>WOLF.BUSINESS — Strategic Brand Asset</title>
+
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  body {
-    background: radial-gradient(circle at top, #1e1b2e, #0d0c17);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #eee;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    text-align: center;
-    padding: 20px;
-  }
+/* Body */
+body {
+  background: radial-gradient(circle at top, #1e1b2e, #0d0c17);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #eee;
+  line-height: 1.6;
+  min-height: 100vh;
+  text-align: center;
+  padding: 20px;
+  overflow-x: hidden;
+}
 
-  .card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 28px;
-    padding: clamp(24px, 4vw, 60px);
-    max-width: 95%;
-    width: 100%;
-    box-shadow: 0 10px 35px rgba(0,0,0,0.55);
-    backdrop-filter: blur(10px);
-    animation: fadeIn 0.9s ease;
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-  }
+/* Container */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
-  .card:hover {
-    transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 18px 45px rgba(0,0,0,0.55);
-  }
+/* Hero */
+.hero {
+  background: rgba(255,255,255,0.05);
+  border-radius: 28px;
+  padding: clamp(24px, 4vw, 60px);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.55);
+  backdrop-filter: blur(10px);
+  animation: fadeIn 1s ease forwards;
+  margin-bottom: 40px;
+  opacity: 0;
+}
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(18px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  h1 {
-    font-size: clamp(2rem, 8vw, 4.5rem);
-    font-weight: 900;
-    background: linear-gradient(90deg, #ff8686, #ff7979);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 0.4em;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    text-shadow: 0 3px 20px rgba(0, 0, 0, 0.6);
-    line-height: 1.1;
-  }
+/* Headings */
+h1 {
+  font-size: clamp(2rem, 8vw, 4rem);
+  font-weight: 900;
+  background: linear-gradient(90deg, #ff8686, #ff7979);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.4em;
+  text-transform: uppercase;
+  text-shadow: 0 3px 20px rgba(0,0,0,0.6);
+  line-height: 1.1;
+  animation: titlePulse 2s ease-in-out infinite alternate;
+}
 
-  .price {
-    font-size: clamp(1.1rem, 3.5vw, 1.8rem);
-    color: #ff8686;
-    margin-bottom: 0.4em;
-    font-weight: 700;
-  }
+@keyframes titlePulse {
+  from { text-shadow: 0 3px 20px rgba(0,0,0,0.6); }
+  to { text-shadow: 0 5px 28px rgba(255,134,134,0.9); }
+}
 
-  .tagline {
-    font-size: clamp(0.9rem, 2.2vw, 1.2rem);
-    color: #ccc;
-    margin-bottom: 1em;
-    font-style: italic;
-  }
+.subtitle {
+  font-size: clamp(1.1rem, 3.5vw, 1.8rem);
+  color: #ff8686;
+  margin-bottom: 1.6em;
+  font-weight: 700;
+}
 
-  .domain-line {
-    font-size: clamp(1rem, 2.6vw, 1.5rem);
-    font-weight: 600;
-    color: #fff;
-    white-space: nowrap;
-    overflow-x: auto;
-    text-overflow: unset;
-    margin: 0 auto 1.2em;
-    display: block;
-    scrollbar-width: none;
-  }
+/* Section titles */
+h2 {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  margin-bottom: 1em;
+  color: #ff8686;
+  font-weight: 800;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
 
-  .domain-line::-webkit-scrollbar {
-    display: none;
-  }
+/* List */
+ul {
+  text-align: left;
+  margin: 0 auto;
+  max-width: 700px;
+  list-style: disc inside;
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  color: #ddd;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
 
-  .buttons {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: clamp(10px, 3vw, 18px);
-    margin-top: 1.6em;
-  }
+ul li {
+  padding: 6px 0;
+}
 
-  .btn {
-    background: linear-gradient(90deg, #ff6b6b, #c26cc5);
-    color: #fff;
-    padding: clamp(10px, 2vw, 16px) clamp(20px, 4vw, 42px);
-    border-radius: 40px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: clamp(0.95rem, 2.5vw, 1.2rem);
-    box-shadow: 0 6px 25px rgba(0,0,0,0.4);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-  }
+ul li:hover {
+  color: #ff8686;
+}
 
-  .btn:active { transform: translateY(1px); }
-  .btn:hover { opacity: 0.95; transform: scale(1.03); }
+/* CTA Section */
+.section {
+  background: rgba(255,255,255,0.03);
+  border-radius: 24px;
+  padding: clamp(20px, 3vw, 40px);
+  margin-bottom: 30px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
 
-  @media (max-width: 520px) {
-    body { padding: 12px; }
-    .card { padding: 24px 16px; }
-    h1 { font-size: 2rem; line-height: 1.1; }
-    .price { font-size: 1.1rem; }
-    .tagline { font-size: 0.95rem; }
-    .domain-line { font-size: 0.95rem; white-space: normal; overflow: visible; }
-    .buttons { flex-direction: column; align-items: stretch; gap: 12px; }
-    .btn { width: 100%; }
-  }
+/* Button */
+.btn {
+  background: linear-gradient(90deg, #ff6b6b, #c26cc5);
+  color: #fff;
+  padding: clamp(12px, 2vw, 18px) clamp(24px, 4vw, 40px);
+  border-radius: 40px;
+  font-weight: 700;
+  font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+  display: inline-block;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  text-decoration: none;
+}
 
+.btn:hover,
+.btn:focus {
+  opacity: 0.95;
+  transform: scale(1.05);
+  outline: 2px solid #ff8686;
+  outline-offset: 4px;
+}
+
+/* Reveal */
+.reveal {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+  body { padding: 12px; }
+  h1 { font-size: 2rem; }
+  .subtitle { font-size: 1.1rem; }
+  ul { font-size: 0.95rem; }
+  .btn { width: 100%; text-align: center; }
+}
 </style>
 </head>
 
 <body>
-  <div class="card" role="region" aria-label="Premium domain card">
+<div class="container">
+
+  <!-- Hero -->
+  <header class="hero">
     <h1>WOLF.BUSINESS</h1>
-    <p class="price">Premium Domain For Sale</p>
-    <p class="tagline">"WOLF.BUSINESS has an innate quality of being brand-ready. Upon first glance or mention, it instantly establishes itself as a powerful and credible brand, exactly as it is.".</p>
+    <p class="subtitle">A Ready-to-Use Strategic Brand Name</p>
 
-    <p class="domain-line">A premium one-word, four-letter, one-syllable dictionary domain, a rare and powerful digital asset.🐺</p>
+    <h2 class="reveal-on-scroll">Asset Highlights</h2>
+    <ul class="reveal-on-scroll">
+      <li>One-word dictionary name</li>
+      <li>Four letters, one syllable</li>
+      <li>Globally recognizable and brand-ready</li>
+      <li>Premium digital asset 🐺</li>
+    </ul>
+  </header>
 
-    <div class="buttons">
-      <a class="btn" href="tel:+201276919466">📞 Call Now</a>
-    </div>
-  </div>
+  <!-- CTA -->
+  <section class="section reveal-on-scroll">
+    <h2>Acquire WOLF.BUSINESS</h2>
+    <a href="tel:+201276919466" class="btn" aria-label="Call WOLF.BUSINESS now">
+      📞 Call Now
+    </a>
+  </section>
+
+</div>
+
+<script>
+const revealElements = document.querySelectorAll('.reveal-on-scroll, .section');
+
+function revealOnScroll() {
+  const windowHeight = window.innerHeight;
+  revealElements.forEach(el => {
+    const elementTop = el.getBoundingClientRect().top;
+    if (elementTop < windowHeight - 100) {
+      el.classList.add('reveal');
+    }
+  });
+}
+
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
+</script>
+
 </body>
 </html>
-
