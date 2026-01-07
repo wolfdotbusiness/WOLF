@@ -7,14 +7,12 @@
 <title>WOLF.BUSINESS — Strategic Brand Asset</title>
 
 <style>
-/* Reset */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Body */
 body {
   background: radial-gradient(circle at top, #1e1b2e, #0d0c17);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -23,26 +21,22 @@ body {
   min-height: 100vh;
   text-align: center;
   padding: 20px;
-  overflow-x: hidden;
 }
 
-/* Container */
 .container {
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Hero */
+/* HERO */
 .hero {
   background: rgba(255,255,255,0.05);
   border-radius: 28px;
-  padding: clamp(24px, 4vw, 60px);
+  padding: clamp(28px, 4vw, 60px);
   box-shadow: 0 10px 35px rgba(0,0,0,0.55);
   backdrop-filter: blur(10px);
-  animation: fadeIn 1s ease forwards;
-  margin-bottom: 40px;
-  opacity: 0;
+  animation: fadeIn 0.9s ease;
 }
 
 @keyframes fadeIn {
@@ -50,7 +44,7 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Headings */
+/* HEADINGS */
 h1 {
   font-size: clamp(2rem, 8vw, 4rem);
   font-weight: 900;
@@ -60,44 +54,30 @@ h1 {
   margin-bottom: 0.4em;
   text-transform: uppercase;
   text-shadow: 0 3px 20px rgba(0,0,0,0.6);
-  line-height: 1.1;
-  animation: titlePulse 2s ease-in-out infinite alternate;
-}
-
-@keyframes titlePulse {
-  from { text-shadow: 0 3px 20px rgba(0,0,0,0.6); }
-  to { text-shadow: 0 5px 28px rgba(255,134,134,0.9); }
 }
 
 .subtitle {
   font-size: clamp(1.1rem, 3.5vw, 1.8rem);
   color: #ff8686;
-  margin-bottom: 1.6em;
+  margin-bottom: 2em;
   font-weight: 700;
 }
 
-/* Section titles */
 h2 {
-  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-size: clamp(1.4rem, 5vw, 2.3rem);
   margin-bottom: 1em;
   color: #ff8686;
   font-weight: 800;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease;
 }
 
-/* List */
+/* LIST */
 ul {
   text-align: left;
-  margin: 0 auto;
+  margin: 0 auto 2.2em;
   max-width: 700px;
   list-style: disc inside;
   font-size: clamp(1rem, 2.2vw, 1.2rem);
   color: #ddd;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease;
 }
 
 ul li {
@@ -108,53 +88,32 @@ ul li:hover {
   color: #ff8686;
 }
 
-/* CTA Section */
-.section {
-  background: rgba(255,255,255,0.03);
-  border-radius: 24px;
-  padding: clamp(20px, 3vw, 40px);
-  margin-bottom: 30px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease;
-}
-
-/* Button */
+/* BUTTON */
 .btn {
   background: linear-gradient(90deg, #ff6b6b, #c26cc5);
   color: #fff;
-  padding: clamp(12px, 2vw, 18px) clamp(24px, 4vw, 40px);
+  padding: clamp(14px, 2vw, 18px) clamp(26px, 4vw, 44px);
   border-radius: 40px;
   font-weight: 700;
-  font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
   box-shadow: 0 6px 25px rgba(0,0,0,0.4);
   display: inline-block;
-  transition: transform 0.2s ease, opacity 0.2s ease;
   text-decoration: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.btn:hover,
-.btn:focus {
-  opacity: 0.95;
+.btn:hover {
   transform: scale(1.05);
-  outline: 2px solid #ff8686;
-  outline-offset: 4px;
+  opacity: 0.95;
 }
 
-/* Reveal */
-.reveal {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-
-/* Mobile */
+/* MOBILE */
 @media (max-width: 520px) {
   body { padding: 12px; }
   h1 { font-size: 2rem; }
   .subtitle { font-size: 1.1rem; }
   ul { font-size: 0.95rem; }
-  .btn { width: 100%; text-align: center; }
+  .btn { width: 100%; }
 }
 </style>
 </head>
@@ -162,46 +121,24 @@ ul li:hover {
 <body>
 <div class="container">
 
-  <!-- Hero -->
   <header class="hero">
     <h1>WOLF.BUSINESS</h1>
     <p class="subtitle">A Ready-to-Use Strategic Brand Name</p>
 
-    <h2 class="reveal-on-scroll">Asset Highlights</h2>
-    <ul class="reveal-on-scroll">
+    <h2>Asset Highlights</h2>
+    <ul>
       <li>One-word dictionary name</li>
       <li>Four letters, one syllable</li>
       <li>Globally recognizable and brand-ready</li>
       <li>Premium digital asset 🐺</li>
     </ul>
-  </header>
 
-  <!-- CTA -->
-  <section class="section reveal-on-scroll">
-    <h2>Acquire WOLF.BUSINESS</h2>
+    <!-- CTA مباشرة تحت الليست -->
     <a href="tel:+201276919466" class="btn" aria-label="Call WOLF.BUSINESS now">
       📞 Call Now
     </a>
-  </section>
+  </header>
 
 </div>
-
-<script>
-const revealElements = document.querySelectorAll('.reveal-on-scroll, .section');
-
-function revealOnScroll() {
-  const windowHeight = window.innerHeight;
-  revealElements.forEach(el => {
-    const elementTop = el.getBoundingClientRect().top;
-    if (elementTop < windowHeight - 100) {
-      el.classList.add('reveal');
-    }
-  });
-}
-
-window.addEventListener('scroll', revealOnScroll);
-window.addEventListener('load', revealOnScroll);
-</script>
-
 </body>
 </html>
