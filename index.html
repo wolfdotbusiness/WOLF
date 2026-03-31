@@ -22,8 +22,6 @@
     --text:      #f0eaf8;
     --muted:     #8a82a0;
     --accent:    #c97ef5;
-    --expo:      cubic-bezier(0.16, 1, 0.3, 1);
-    --silk:      cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   html { scroll-behavior: smooth; }
@@ -33,35 +31,8 @@
     font-family: 'DM Sans', sans-serif;
     color: var(--text);
     overflow-x: hidden;
-    cursor: none;
+    cursor: default;
   }
-
-  /* ── Custom Cursor ── */
-  #cursor-dot {
-    position: fixed;
-    width: 8px; height: 8px;
-    background: var(--accent);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: width 0.2s var(--expo), height 0.2s var(--expo), background 0.2s ease, opacity 0.3s ease;
-    mix-blend-mode: screen;
-  }
-  #cursor-ring {
-    position: fixed;
-    width: 38px; height: 38px;
-    border: 1.5px solid rgba(201,126,245,0.6);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: width 0.45s var(--expo), height 0.45s var(--expo), border-color 0.3s ease, opacity 0.3s ease;
-  }
-  body.cursor-hover #cursor-dot  { width: 14px; height: 14px; background: var(--crimson); }
-  body.cursor-hover #cursor-ring { width: 56px; height: 56px; border-color: rgba(224,61,90,0.5); }
-  body.cursor-click #cursor-dot  { width: 6px; height: 6px; }
-  body.cursor-click #cursor-ring { width: 28px; height: 28px; }
 
   /* ── Noise Overlay ── */
   body::before {
@@ -85,44 +56,34 @@
   .blob {
     position: absolute;
     border-radius: 50%;
-    filter: blur(110px);
-    opacity: 0.16;
+    filter: blur(100px);
+    opacity: 0.18;
+    animation: drift linear infinite;
   }
   .blob-1 {
-    width: 750px; height: 750px;
-    background: radial-gradient(circle, var(--violet), transparent 70%);
+    width: 700px; height: 700px;
+    background: var(--violet);
     top: -20%; left: -15%;
-    animation: blob1 32s ease-in-out infinite alternate;
+    animation-duration: 28s;
+    animation-direction: alternate;
   }
   .blob-2 {
-    width: 550px; height: 550px;
-    background: radial-gradient(circle, var(--crimson), transparent 70%);
+    width: 500px; height: 500px;
+    background: var(--crimson);
     bottom: -10%; right: -10%;
-    animation: blob2 26s ease-in-out infinite alternate;
+    animation-duration: 22s;
+    animation-direction: alternate-reverse;
   }
   .blob-3 {
-    width: 380px; height: 380px;
-    background: radial-gradient(circle, var(--rose), transparent 70%);
+    width: 350px; height: 350px;
+    background: var(--rose);
     top: 40%; left: 55%;
-    animation: blob3 20s ease-in-out infinite alternate;
+    animation-duration: 18s;
+    animation-direction: alternate;
   }
-  /* Cinematic, organic blob paths */
-  @keyframes blob1 {
-    0%   { transform: translate(0, 0)   scale(1);    border-radius: 50%; }
-    33%  { transform: translate(30px, 20px) scale(1.06); border-radius: 40% 60% 55% 45%; }
-    66%  { transform: translate(15px, 40px) scale(0.96); border-radius: 60% 40% 45% 55%; }
-    100% { transform: translate(40px, 10px) scale(1.1);  border-radius: 50%; }
-  }
-  @keyframes blob2 {
-    0%   { transform: translate(0, 0)    scale(1);    border-radius: 50%; }
-    33%  { transform: translate(-30px, -20px) scale(1.08); border-radius: 55% 45% 40% 60%; }
-    66%  { transform: translate(-15px, -35px) scale(0.94); border-radius: 45% 55% 60% 40%; }
-    100% { transform: translate(-40px, -15px) scale(1.05); border-radius: 50%; }
-  }
-  @keyframes blob3 {
-    0%   { transform: translate(0, 0)    scale(1); }
-    50%  { transform: translate(25px, -30px) scale(1.1); }
-    100% { transform: translate(-15px, 20px) scale(0.92); }
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(40px, 30px) scale(1.08); }
   }
 
   /* ── Page Wrapper ── */
@@ -139,6 +100,8 @@
     text-align: center;
     position: relative;
   }
+
+  /* Thin horizontal rule at bottom of hero */
   .hero::after {
     content: '';
     position: absolute;
@@ -163,17 +126,17 @@
     color: var(--accent);
     margin-bottom: 32px;
     opacity: 0;
-    animation: heroRise 1.2s var(--expo) 0.1s forwards;
+    animation: rise 0.8s 0.1s ease forwards;
   }
   .badge-dot {
     width: 6px; height: 6px;
     border-radius: 50%;
     background: var(--accent);
-    animation: pulse 2.4s ease-in-out infinite;
+    animation: pulse 2s ease-in-out infinite;
   }
   @keyframes pulse {
     0%,100% { opacity: 1; transform: scale(1); }
-    50%      { opacity: 0.3; transform: scale(0.65); }
+    50%      { opacity: 0.4; transform: scale(0.7); }
   }
 
   /* Wolf Icon */
@@ -182,14 +145,8 @@
     line-height: 1;
     margin-bottom: 20px;
     opacity: 0;
-    animation: heroRise 1.2s var(--expo) 0.28s forwards;
-    filter: drop-shadow(0 0 40px rgba(139,71,217,0.7));
-    display: inline-block;
-    transition: filter 0.4s ease, transform 0.4s var(--expo);
-  }
-  .wolf:hover {
-    filter: drop-shadow(0 0 60px rgba(224,61,90,0.8));
-    transform: scale(1.08) rotate(-4deg);
+    animation: rise 0.8s 0.25s ease forwards;
+    filter: drop-shadow(0 0 30px rgba(139,71,217,0.6));
   }
 
   /* Headline */
@@ -199,17 +156,12 @@
     letter-spacing: 0.04em;
     line-height: 0.9;
     background: linear-gradient(135deg, #f5d0fe 0%, #e879f9 30%, #8b47d9 60%, #e03d5a 100%);
-    background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     opacity: 0;
-    animation: heroRise 1.2s var(--expo) 0.44s forwards, shimmerGrad 6s ease-in-out 1.8s infinite;
+    animation: rise 0.9s 0.4s ease forwards;
     position: relative;
-  }
-  @keyframes shimmerGrad {
-    0%,100% { background-position: 0% 50%; }
-    50%      { background-position: 100% 50%; }
   }
 
   .tld {
@@ -217,12 +169,10 @@
     font-size: 0.42em;
     letter-spacing: 0.22em;
     background: linear-gradient(135deg, #8b47d9, #e03d5a);
-    background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin-top: 0.05em;
-    animation: shimmerGrad 6s ease-in-out 2s infinite;
   }
 
   /* Tagline */
@@ -234,7 +184,7 @@
     line-height: 1.75;
     margin: 28px auto 0;
     opacity: 0;
-    animation: heroRise 1.2s var(--expo) 0.58s forwards;
+    animation: rise 0.9s 0.55s ease forwards;
   }
   .tagline strong { color: var(--text); font-weight: 600; }
 
@@ -246,10 +196,9 @@
     justify-content: center;
     margin-top: 40px;
     opacity: 0;
-    animation: heroRise 1.2s var(--expo) 0.72s forwards;
+    animation: rise 0.9s 0.7s ease forwards;
   }
 
-  /* ── Buttons ── */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -261,28 +210,11 @@
     font-size: 0.95rem;
     text-decoration: none;
     border: none;
-    cursor: none;
-    transition: transform 0.4s var(--expo), box-shadow 0.4s var(--expo), background 0.3s ease;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
     white-space: nowrap;
-    position: relative;
-    overflow: hidden;
   }
-
-  /* Shimmer sweep on hover */
-  .btn::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-    transform: skewX(-20deg);
-    transition: left 0s;
-  }
-  .btn:hover::before {
-    left: 160%;
-    transition: left 0.55s var(--silk);
-  }
+  .btn:hover { transform: translateY(-3px); }
 
   .btn-primary {
     background: linear-gradient(135deg, #8b47d9, #e03d5a);
@@ -290,7 +222,7 @@
     box-shadow: 0 0 0 0 var(--glow);
   }
   .btn-primary:hover {
-    box-shadow: 0 16px 52px rgba(139,71,217,0.55);
+    box-shadow: 0 12px 48px rgba(139,71,217,0.5);
   }
 
   .btn-ghost {
@@ -302,7 +234,7 @@
   .btn-ghost:hover {
     background: rgba(139,71,217,0.12);
     border-color: var(--accent);
-    box-shadow: 0 8px 36px rgba(139,71,217,0.25);
+    box-shadow: 0 8px 32px rgba(139,71,217,0.2);
   }
 
   /* Scroll hint */
@@ -316,24 +248,23 @@
     align-items: center;
     gap: 6px;
     opacity: 0;
-    animation: heroRise 1.2s var(--expo) 1.3s forwards;
+    animation: rise 1s 1.2s ease forwards;
   }
   .scroll-hint span {
     font-size: 0.72rem;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--muted);
   }
   .scroll-line {
     width: 1px;
-    height: 44px;
+    height: 40px;
     background: linear-gradient(to bottom, var(--accent), transparent);
-    animation: scrollBob 2.4s ease-in-out infinite;
-    transform-origin: top;
+    animation: scrollBob 2s ease-in-out infinite;
   }
   @keyframes scrollBob {
     0%,100% { transform: scaleY(1); opacity: 1; }
-    50%      { transform: scaleY(0.5); opacity: 0.3; }
+    50%      { transform: scaleY(0.6); opacity: 0.4; }
   }
 
   /* ── STATS ── */
@@ -356,16 +287,16 @@
     background: var(--bg);
     padding: 36px 20px;
     text-align: center;
+    transition: background 0.3s ease;
     position: relative;
-    overflow: hidden;
   }
   .stat::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 50% 0%, rgba(139,71,217,0.2), transparent 70%);
+    background: radial-gradient(circle at 50% 0%, rgba(139,71,217,0.15), transparent 70%);
     opacity: 0;
-    transition: opacity 0.5s var(--expo);
+    transition: opacity 0.3s ease;
   }
   .stat:hover::after { opacity: 1; }
   .stat-num {
@@ -378,18 +309,14 @@
     background-clip: text;
     line-height: 1;
     margin-bottom: 8px;
-    transition: transform 0.4s var(--expo);
   }
-  .stat:hover .stat-num { transform: scale(1.08); }
   .stat-label {
     font-size: 0.8rem;
     font-weight: 500;
     color: var(--muted);
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    transition: color 0.3s ease;
   }
-  .stat:hover .stat-label { color: var(--text); }
 
   /* ── FEATURES ── */
   .features {
@@ -403,6 +330,7 @@
     text-transform: uppercase;
     color: var(--accent);
     margin-bottom: 16px;
+    opacity: 0;
   }
   .section-title {
     font-family: 'Bebas Neue', sans-serif;
@@ -414,6 +342,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    opacity: 0;
   }
 
   .cards {
@@ -424,7 +353,6 @@
     gap: 20px;
   }
 
-  /* 3D tilt card */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -432,36 +360,35 @@
     padding: 36px 30px;
     position: relative;
     overflow: hidden;
-    transition: border-color 0.4s ease, box-shadow 0.5s var(--expo);
-    transform-style: preserve-3d;
-    will-change: transform;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
   }
   .card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(139,71,217,0.6), transparent);
+    background: linear-gradient(90deg, transparent, rgba(139,71,217,0.5), transparent);
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.3s ease;
   }
   .card:hover {
-    border-color: rgba(139,71,217,0.45);
-    box-shadow: 0 30px 70px rgba(139,71,217,0.18);
+    transform: translateY(-8px);
+    border-color: rgba(139,71,217,0.4);
+    box-shadow: 0 24px 60px rgba(139,71,217,0.15);
   }
   .card:hover::before { opacity: 1; }
 
   .card-glow {
     position: absolute;
-    width: 220px; height: 220px;
+    width: 200px; height: 200px;
     border-radius: 50%;
-    filter: blur(70px);
+    filter: blur(60px);
     opacity: 0;
-    transition: opacity 0.5s ease;
-    top: -70px; right: -70px;
-    pointer-events: none;
+    transition: opacity 0.4s ease;
+    top: -60px; right: -60px;
   }
-  .card:hover .card-glow { opacity: 0.28; }
+  .card:hover .card-glow { opacity: 0.25; }
   .card:nth-child(1) .card-glow { background: var(--violet); }
   .card:nth-child(2) .card-glow { background: var(--crimson); }
   .card:nth-child(3) .card-glow { background: var(--rose); }
@@ -470,25 +397,18 @@
     font-size: 2rem;
     margin-bottom: 20px;
     display: block;
-    transition: transform 0.4s var(--expo);
   }
-  .card:hover .card-icon { transform: scale(1.15) translateY(-3px); }
-
   .card h3 {
     font-size: 1.15rem;
     font-weight: 700;
     margin-bottom: 12px;
     color: var(--text);
-    transition: color 0.3s ease;
   }
-  .card:hover h3 { color: var(--accent); }
   .card p {
     font-size: 0.9rem;
     color: var(--muted);
     line-height: 1.8;
-    transition: color 0.3s ease;
   }
-  .card:hover p { color: rgba(240,234,248,0.75); }
 
   /* ── CONTACT STRIP ── */
   .contact-strip {
@@ -504,13 +424,9 @@
     align-items: center;
     justify-content: space-between;
     gap: 32px;
+    opacity: 0;
     position: relative;
     overflow: hidden;
-    transition: border-color 0.5s ease, box-shadow 0.5s ease;
-  }
-  .contact-strip:hover {
-    border-color: rgba(139,71,217,0.5);
-    box-shadow: 0 24px 80px rgba(139,71,217,0.12);
   }
   .contact-strip::before {
     content: '';
@@ -518,22 +434,6 @@
     inset: 0;
     background: radial-gradient(ellipse at 30% 50%, rgba(139,71,217,0.12), transparent 60%);
     pointer-events: none;
-  }
-  /* Animated border shimmer */
-  .contact-strip::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(90deg, transparent 0%, rgba(201,126,245,0.15) 50%, transparent 100%);
-    background-size: 200% 100%;
-    animation: borderSweep 5s linear infinite;
-    pointer-events: none;
-    opacity: 0.6;
-  }
-  @keyframes borderSweep {
-    0%   { background-position: -100% 0; }
-    100% { background-position: 200% 0; }
   }
   .contact-strip-text h2 {
     font-family: 'Bebas Neue', sans-serif;
@@ -555,8 +455,6 @@
     flex-direction: column;
     gap: 12px;
     flex-shrink: 0;
-    position: relative;
-    z-index: 1;
   }
 
   /* ── MODAL ── */
@@ -565,20 +463,13 @@
     position: fixed;
     inset: 0;
     background: rgba(8,7,16,0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(12px);
     z-index: 2000;
     align-items: center;
     justify-content: center;
     padding: 20px;
-    opacity: 0;
-    transition: opacity 0.4s ease;
   }
-  .modal-overlay.open {
-    display: flex;
-    opacity: 1;
-  }
-  .modal-overlay.closing { opacity: 0; }
+  .modal-overlay.open { display: flex; }
 
   .modal {
     background: #100e1f;
@@ -588,18 +479,12 @@
     max-width: 480px;
     width: 100%;
     position: relative;
-    animation: modalIn 0.6s var(--expo) forwards;
-    box-shadow: 0 60px 120px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.03), 0 0 80px rgba(139,71,217,0.12);
+    animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.03);
   }
-  .modal-overlay.closing .modal { animation: modalOut 0.35s var(--silk) forwards; }
-
-  @keyframes modalIn {
-    from { opacity: 0; transform: scale(0.88) translateY(28px); }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
     to   { opacity: 1; transform: scale(1) translateY(0); }
-  }
-  @keyframes modalOut {
-    from { opacity: 1; transform: scale(1) translateY(0); }
-    to   { opacity: 0; transform: scale(0.94) translateY(16px); }
   }
 
   .modal-close {
@@ -612,15 +497,10 @@
     color: var(--muted);
     font-size: 1rem;
     display: flex; align-items: center; justify-content: center;
-    cursor: none;
-    transition: all 0.3s var(--expo);
+    cursor: pointer;
+    transition: all 0.2s ease;
   }
-  .modal-close:hover {
-    background: rgba(224,61,90,0.15);
-    color: var(--crimson);
-    border-color: var(--crimson);
-    transform: rotate(90deg) scale(1.1);
-  }
+  .modal-close:hover { background: rgba(224,61,90,0.15); color: var(--crimson); border-color: var(--crimson); }
 
   .modal h2 {
     font-family: 'Bebas Neue', sans-serif;
@@ -647,10 +527,7 @@
     text-transform: uppercase;
     color: var(--muted);
     margin-bottom: 7px;
-    transition: color 0.25s ease;
   }
-  .field:focus-within label { color: var(--accent); }
-
   .field input,
   .field textarea {
     width: 100%;
@@ -661,15 +538,13 @@
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
     font-size: 0.95rem;
-    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-    cursor: none;
+    transition: border-color 0.2s, background 0.2s;
   }
   .field input:focus,
   .field textarea:focus {
     outline: none;
     border-color: rgba(139,71,217,0.6);
     background: rgba(139,71,217,0.06);
-    box-shadow: 0 0 0 3px rgba(139,71,217,0.1);
   }
   .field textarea { resize: vertical; min-height: 90px; }
 
@@ -677,37 +552,27 @@
     width: 100%;
     padding: 14px;
     background: linear-gradient(135deg, #8b47d9, #e03d5a);
-    background-size: 200% 200%;
     border: none;
     border-radius: 12px;
     color: #fff;
     font-family: 'DM Sans', sans-serif;
     font-weight: 700;
     font-size: 1rem;
-    cursor: none;
+    cursor: pointer;
     margin-top: 8px;
-    transition: box-shadow 0.4s var(--expo), transform 0.4s var(--expo), background-position 0.5s ease;
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
   }
-  .submit::before {
+  .submit::after {
     content: '';
     position: absolute;
-    top: 0; left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-    transform: skewX(-20deg);
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s ease;
   }
-  .submit:hover::before {
-    left: 160%;
-    transition: left 0.55s var(--silk);
-  }
-  .submit:hover {
-    box-shadow: 0 10px 40px rgba(139,71,217,0.5);
-    transform: translateY(-2px);
-    background-position: 100% 50%;
-  }
+  .submit:hover::after { background: rgba(255,255,255,0.08); }
+  .submit:hover { box-shadow: 0 8px 32px rgba(139,71,217,0.45); transform: translateY(-2px); }
 
   /* ── FOOTER ── */
   footer {
@@ -717,29 +582,17 @@
     color: var(--muted);
     font-size: 0.85rem;
   }
-  footer a {
-    color: var(--accent);
-    text-decoration: none;
-    transition: color 0.25s ease;
-  }
-  footer a:hover { color: var(--text); text-decoration: underline; }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
 
-  /* ── ENTRANCE ANIMATION ── */
-  @keyframes heroRise {
-    from { opacity: 0; transform: translateY(26px); }
+  /* ── ANIMATIONS ── */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(22px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── SCROLL REVEAL ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.9s var(--expo), transform 0.9s var(--expo);
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: none;
-  }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
@@ -748,9 +601,12 @@
     .contact-strip { flex-direction: column; text-align: center; padding: 40px 28px; }
     .contact-strip-actions { flex-direction: row; width: 100%; justify-content: center; }
   }
+
   @media (max-width: 600px) {
     .hero { padding: 48px 18px 70px; }
     h1 { font-size: clamp(3.5rem, 22vw, 5.5rem); }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .stat { padding: 28px 16px; }
     .cta-group { flex-direction: column; align-items: stretch; }
     .btn { justify-content: center; padding: 15px 24px; }
     .modal { padding: 32px 22px; }
@@ -758,24 +614,14 @@
     .contact-strip-actions { flex-direction: column; }
     .contact-strip-actions .btn { width: 100%; justify-content: center; }
   }
+
   @media (max-width: 400px) {
     .stats-inner { grid-template-columns: 1fr 1fr; }
     h1 { font-size: 3.2rem; }
   }
-
-  /* Hide custom cursor on touch devices */
-  @media (hover: none) {
-    body { cursor: auto; }
-    #cursor-dot, #cursor-ring { display: none; }
-    .btn, .modal-close, .submit, .field input, .field textarea { cursor: pointer; }
-  }
 </style>
 </head>
 <body>
-
-<!-- Custom Cursor -->
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
 
 <!-- Ambient blobs -->
 <div class="blobs" aria-hidden="true">
@@ -798,13 +644,13 @@
     </h1>
 
     <p class="tagline">
-      <strong>"Four letters. One syllable. One premium dictionary domain — semantically clear. 🐺"</strong> ✅
+       <strong>“Four letters. One syllable. One premium dictionary domain — semantically clear. 🐺” ✅
     </p>
 
     <div class="cta-group">
-      <button class="btn btn-primary magnetic" onclick="openModal()">✉️ Send an Inquiry</button>
-      <a class="btn btn-ghost magnetic" href="tel:+201276919466">📞 Call Direct</a>
-      <a class="btn btn-ghost magnetic" href="https://wa.me/201276919466?text=I%27m%20interested%20in%20wolf.business" target="_blank" rel="noopener">💬 WhatsApp</a>
+      <button class="btn btn-primary" onclick="openModal()">✉️ Send an Inquiry</button>
+      <a class="btn btn-ghost" href="tel:+201276919466">📞 Call Direct</a>
+      <a class="btn btn-ghost" href="https://wa.me/201276919466?text=I%27m%20interested%20in%20wolf.business" target="_blank" rel="noopener">💬 WhatsApp</a>
     </div>
 
     <div class="scroll-hint" aria-hidden="true">
@@ -817,19 +663,19 @@
   <section class="stats" aria-label="Domain at a glance">
     <div class="stats-inner reveal">
       <div class="stat">
-        <div class="stat-num" data-count="4" data-suffix="">0</div>
+        <div class="stat-num">4</div>
         <div class="stat-label">Letters Only</div>
       </div>
       <div class="stat">
-        <div class="stat-num" data-count="1" data-suffix="">0</div>
+        <div class="stat-num">1</div>
         <div class="stat-label">Syllable</div>
       </div>
       <div class="stat">
-        <div class="stat-num" data-count="100" data-suffix="%">0%</div>
+        <div class="stat-num">100%</div>
         <div class="stat-label">Dictionary Word</div>
       </div>
       <div class="stat">
-        <div class="stat-num" data-static=".BUSINESS">.BUSINESS</div>
+        <div class="stat-num">.BUSINESS</div>
         <div class="stat-label">Premium TLD</div>
       </div>
     </div>
@@ -841,19 +687,19 @@
     <h2 class="section-title reveal">The WOLF Advantage</h2>
 
     <div class="cards">
-      <div class="card reveal tilt-card">
+      <div class="card reveal">
         <div class="card-glow"></div>
         <span class="card-icon">💎</span>
         <h3>Genuine Digital Rarity</h3>
         <p>Ultra-short dictionary domains in this tier are nearly impossible to acquire. Wolf.business is a one-of-a-kind asset — once it's gone, it's gone for good.</p>
       </div>
-      <div class="card reveal tilt-card">
+      <div class="card reveal">
         <div class="card-glow"></div>
         <span class="card-icon">🎯</span>
         <h3>Instant Brand Authority</h3>
         <p>Four letters. One syllable. Zero ambiguity. Whether you're a startup, agency, or global enterprise — this domain positions you as an apex player from day one.</p>
       </div>
-      <div class="card reveal tilt-card">
+      <div class="card reveal">
         <div class="card-glow"></div>
         <span class="card-icon">📈</span>
         <h3>Appreciating Asset</h3>
@@ -869,12 +715,12 @@
       <p>Reach out directly — we respond fast and negotiate in good faith.</p>
     </div>
     <div class="contact-strip-actions">
-      <button class="btn btn-primary magnetic" onclick="openModal()">✉️ Inquire Now</button>
-      <a class="btn btn-ghost magnetic" href="https://wa.me/201276919466?text=I%27m%20interested%20in%20wolf.business" target="_blank" rel="noopener">💬 WhatsApp</a>
+      <button class="btn btn-primary" onclick="openModal()">✉️ Inquire Now</button>
+      <a class="btn btn-ghost" href="https://wa.me/201276919466?text=I%27m%20interested%20in%20wolf.business" target="_blank" rel="noopener">💬 WhatsApp</a>
     </div>
   </div>
 
-  <!-- ── FOOTER ── */
+  <!-- ── FOOTER ── -->
   <footer>
     <p>© 2026 WOLF.BUSINESS &nbsp;·&nbsp; Premium Domain &nbsp;·&nbsp;
        <a href="tel:+201276919466">+20 127 691 9466</a>
@@ -911,166 +757,47 @@
         <label for="message">Message</label>
         <textarea id="message" name="message" placeholder="Tell us how you plan to use this domain…"></textarea>
       </div>
-      <button type="submit" class="submit magnetic">Send Inquiry →</button>
+      <button type="submit" class="submit">Send Inquiry →</button>
     </form>
   </div>
 </div>
 
 <script>
-/* ══════════════════════════════════════
-   CUSTOM CURSOR
-══════════════════════════════════════ */
-const dot  = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
+  /* ── Modal ── */
+  const overlay = document.getElementById('modalOverlay');
+  function openModal()  { overlay.classList.add('open');  document.body.style.overflow = 'hidden'; }
+  function closeModal() { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-let mouseX = 0, mouseY = 0;
-let ringX  = 0, ringY  = 0;
+  function handleSubmit(e) {
+    e.preventDefault();
+    const name  = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const offer = document.getElementById('offer').value;
+    const msg   = document.getElementById('message').value;
+    const body  = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nOffer/Budget: ${offer}\n\nMessage:\n${msg}`;
+    window.location.href = `mailto:abdullahaboulela@gmail.com?subject=${encodeURIComponent('Domain Inquiry — wolf.business from ' + name)}&body=${encodeURIComponent(body)}`;
+    closeModal();
+    e.target.reset();
+  }
 
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  dot.style.left = mouseX + 'px';
-  dot.style.top  = mouseY + 'px';
-});
+  /* ── Scroll Reveal ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        // stagger cards
+        const delay = entry.target.closest('.cards')
+          ? Array.from(entry.target.parentElement.children).indexOf(entry.target) * 120
+          : 0;
+        setTimeout(() => entry.target.classList.add('visible'), delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
 
-// Ring follows with smooth lag
-(function animateRing() {
-  ringX += (mouseX - ringX) * 0.12;
-  ringY += (mouseY - ringY) * 0.12;
-  ring.style.left = ringX + 'px';
-  ring.style.top  = ringY + 'px';
-  requestAnimationFrame(animateRing);
-})();
-
-// Hover states
-const interactives = document.querySelectorAll('a, button, .btn, .card, .stat, .wolf');
-interactives.forEach(el => {
-  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-});
-document.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
-document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-click'));
-
-/* ══════════════════════════════════════
-   MAGNETIC BUTTONS
-══════════════════════════════════════ */
-document.querySelectorAll('.magnetic').forEach(el => {
-  el.addEventListener('mousemove', function(e) {
-    const rect   = this.getBoundingClientRect();
-    const cx     = rect.left + rect.width  / 2;
-    const cy     = rect.top  + rect.height / 2;
-    const dx     = (e.clientX - cx) * 0.28;
-    const dy     = (e.clientY - cy) * 0.28;
-    this.style.transform = `translate(${dx}px, ${dy}px)`;
-  });
-  el.addEventListener('mouseleave', function() {
-    this.style.transform = '';
-    this.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease, background 0.3s ease';
-  });
-  el.addEventListener('mouseenter', function() {
-    this.style.transition = 'transform 0.15s ease, box-shadow 0.4s ease, background 0.3s ease';
-  });
-});
-
-/* ══════════════════════════════════════
-   3D CARD TILT
-══════════════════════════════════════ */
-document.querySelectorAll('.tilt-card').forEach(card => {
-  card.addEventListener('mousemove', function(e) {
-    const rect = this.getBoundingClientRect();
-    const x    = (e.clientX - rect.left) / rect.width  - 0.5;
-    const y    = (e.clientY - rect.top)  / rect.height - 0.5;
-    const rotX = -y * 12;
-    const rotY =  x * 12;
-    this.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(8px)`;
-    this.style.transition = 'transform 0.1s ease';
-  });
-  card.addEventListener('mouseleave', function() {
-    this.style.transform = '';
-    this.style.transition = 'transform 0.6s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease, box-shadow 0.5s ease';
-  });
-});
-
-/* ══════════════════════════════════════
-   STAT COUNTER ANIMATION
-══════════════════════════════════════ */
-function animateCounter(el, target, suffix, duration = 1400) {
-  const start     = performance.now();
-  const easeOut   = t => 1 - Math.pow(1 - t, 3);
-  (function step(now) {
-    const p = Math.min((now - start) / duration, 1);
-    el.textContent = Math.round(easeOut(p) * target) + suffix;
-    if (p < 1) requestAnimationFrame(step);
-  })(start);
-}
-
-/* ══════════════════════════════════════
-   SCROLL REVEAL  +  COUNTER TRIGGER
-══════════════════════════════════════ */
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-
-    const el     = entry.target;
-    const isCard = el.closest('.cards');
-    const delay  = isCard
-      ? Array.from(el.parentElement.children).indexOf(el) * 140
-      : 0;
-
-    setTimeout(() => {
-      el.classList.add('visible');
-
-      // Trigger counters inside stats block
-      el.querySelectorAll('[data-count]').forEach(num => {
-        const target = parseInt(num.dataset.count, 10);
-        const suffix = num.dataset.suffix ?? '';
-        animateCounter(num, target, suffix, 1200);
-      });
-    }, delay);
-
-    revealObserver.unobserve(el);
-  });
-}, { threshold: 0.12 });
-
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-/* ══════════════════════════════════════
-   MODAL — WITH SMOOTH CLOSE ANIMATION
-══════════════════════════════════════ */
-const overlay = document.getElementById('modalOverlay');
-
-function openModal() {
-  overlay.classList.remove('closing');
-  overlay.style.display = 'flex';
-  requestAnimationFrame(() => overlay.classList.add('open'));
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-  overlay.classList.add('closing');
-  overlay.classList.remove('open');
-  setTimeout(() => {
-    overlay.style.display = 'none';
-    overlay.classList.remove('closing');
-  }, 380);
-  document.body.style.overflow = '';
-}
-
-overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-function handleSubmit(e) {
-  e.preventDefault();
-  const name  = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  const phone = document.getElementById('phone').value;
-  const offer = document.getElementById('offer').value;
-  const msg   = document.getElementById('message').value;
-  const body  = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nOffer/Budget: ${offer}\n\nMessage:\n${msg}`;
-  window.location.href = `mailto:abdullahaboulela@gmail.com?subject=${encodeURIComponent('Domain Inquiry — wolf.business from ' + name)}&body=${encodeURIComponent(body)}`;
-  closeModal();
-  e.target.reset();
-}
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
