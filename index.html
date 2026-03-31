@@ -4,220 +4,800 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Wolf.Business</title>
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root {
-  --crimson:#e03d5a;
-  --violet:#8b47d9;
-  --bg:#080710;
-  --text:#f0eaf8;
-  --muted:#8a82a0;
-  --accent:#c97ef5;
-}
+  :root {
+    --crimson:   #e03d5a;
+    --violet:    #8b47d9;
+    --rose:      #f06292;
+    --glow:      rgba(139, 71, 217, 0.35);
+    --glow-r:    rgba(224, 61, 90, 0.35);
+    --bg:        #080710;
+    --surface:   rgba(255,255,255,0.04);
+    --border:    rgba(255,255,255,0.08);
+    --text:      #f0eaf8;
+    --muted:     #8a82a0;
+    --accent:    #c97ef5;
+  }
 
-body {
-  background: var(--bg);
-  font-family: 'DM Sans', sans-serif;
-  color: var(--text);
-  overflow-x:hidden;
-}
+  html { scroll-behavior: smooth; }
 
-/* HERO */
-.hero {
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
+  body {
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: default;
+  }
 
-h1 {
-  font-family:'Bebas Neue';
-  font-size: clamp(60px, 10vw, 120px);
-  background: linear-gradient(270deg,#8b47d9,#e03d5a,#8b47d9);
-  background-size: 400% 400%;
-  animation: gradientMove 8s ease infinite;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
+  /* ── Noise Overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.6;
+  }
 
-@keyframes gradientMove {
-  0%{background-position:0%}
-  50%{background-position:100%}
-  100%{background-position:0%}
-}
+  /* ── Ambient Blobs ── */
+  .blobs {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.18;
+    animation: drift linear infinite;
+  }
+  .blob-1 {
+    width: 700px; height: 700px;
+    background: var(--violet);
+    top: -20%; left: -15%;
+    animation-duration: 28s;
+    animation-direction: alternate;
+  }
+  .blob-2 {
+    width: 500px; height: 500px;
+    background: var(--crimson);
+    bottom: -10%; right: -10%;
+    animation-duration: 22s;
+    animation-direction: alternate-reverse;
+  }
+  .blob-3 {
+    width: 350px; height: 350px;
+    background: var(--rose);
+    top: 40%; left: 55%;
+    animation-duration: 18s;
+    animation-direction: alternate;
+  }
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(40px, 30px) scale(1.08); }
+  }
 
-.tld {
-  display:block;
-  font-size:0.4em;
-  letter-spacing:3px;
-}
+  /* ── Page Wrapper ── */
+  .page { position: relative; z-index: 1; }
 
-/* STATS */
-.stats { margin-top:50px; }
-.stats-inner { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
+  /* ── HERO ── */
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px 80px;
+    text-align: center;
+    position: relative;
+  }
 
-/* ⭐ CARD */
-.stat {
-  background: #0d0b18;
-  padding: 40px 24px;
-  border-radius: 18px;
-  position: relative;
-  overflow: hidden;
-  transition: all .3s ease;
-  cursor:pointer;
-}
+  /* Thin horizontal rule at bottom of hero */
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), var(--border), transparent);
+  }
 
-/* Glow */
-.stat::before {
-  content:'';
-  position:absolute;
-  inset:0;
-  background: linear-gradient(120deg, rgba(224,61,90,0.5), rgba(139,71,217,0.5));
-  opacity:0;
-  transition:.3s;
-  filter:blur(25px);
-}
+  /* Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 100px;
+    border: 1px solid rgba(139,71,217,0.4);
+    background: rgba(139,71,217,0.1);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: rise 0.8s 0.1s ease forwards;
+  }
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.4; transform: scale(0.7); }
+  }
 
-.stat:hover::before { opacity:1; }
+  /* Wolf Icon */
+  .wolf {
+    font-size: clamp(3.5rem, 12vw, 6.5rem);
+    line-height: 1;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: rise 0.8s 0.25s ease forwards;
+    filter: drop-shadow(0 0 30px rgba(139,71,217,0.6));
+  }
 
-.stat:hover {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow:0 20px 60px rgba(139,71,217,0.6);
-}
+  /* Headline */
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 18vw, 11rem);
+    letter-spacing: 0.04em;
+    line-height: 0.9;
+    background: linear-gradient(135deg, #f5d0fe 0%, #e879f9 30%, #8b47d9 60%, #e03d5a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0;
+    animation: rise 0.9s 0.4s ease forwards;
+    position: relative;
+  }
 
-/* Content */
-.stat-num {
-  font-size:40px;
-  font-family:'Bebas Neue';
-  position:relative;
-  z-index:1;
-}
+  .tld {
+    display: block;
+    font-size: 0.42em;
+    letter-spacing: 0.22em;
+    background: linear-gradient(135deg, #8b47d9, #e03d5a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 0.05em;
+  }
 
-.stat-label {
-  font-size:14px;
-  color:var(--muted);
-  position:relative;
-  z-index:1;
-}
+  /* Tagline */
+  .tagline {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--muted);
+    font-weight: 400;
+    max-width: 520px;
+    line-height: 1.75;
+    margin: 28px auto 0;
+    opacity: 0;
+    animation: rise 0.9s 0.55s ease forwards;
+  }
+  .tagline strong { color: var(--text); font-weight: 600; }
 
-/* BUTTONS */
-.cta {
-  margin-top:50px;
-  display:flex;
-  gap:15px;
-}
+  /* CTA Buttons */
+  .cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 40px;
+    opacity: 0;
+    animation: rise 0.9s 0.7s ease forwards;
+  }
 
-button {
-  padding:14px 28px;
-  border:none;
-  border-radius:50px;
-  cursor:pointer;
-  font-weight:600;
-}
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 14px 32px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    white-space: nowrap;
+  }
+  .btn:hover { transform: translateY(-3px); }
 
-.primary {
-  background:linear-gradient(135deg,#8b47d9,#e03d5a);
-  color:#fff;
-}
+  .btn-primary {
+    background: linear-gradient(135deg, #8b47d9, #e03d5a);
+    color: #fff;
+    box-shadow: 0 0 0 0 var(--glow);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 12px 48px rgba(139,71,217,0.5);
+  }
 
-.ghost {
-  background:transparent;
-  border:1px solid #8b47d9;
-  color:#c97ef5;
-}
+  .btn-ghost {
+    background: var(--surface);
+    color: var(--accent);
+    border: 1px solid rgba(139,71,217,0.35);
+    backdrop-filter: blur(8px);
+  }
+  .btn-ghost:hover {
+    background: rgba(139,71,217,0.12);
+    border-color: var(--accent);
+    box-shadow: 0 8px 32px rgba(139,71,217,0.2);
+  }
 
-/* MODAL */
-.modal {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.8);
-  justify-content:center;
-  align-items:center;
-}
+  /* Scroll hint */
+  .scroll-hint {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    animation: rise 1s 1.2s ease forwards;
+  }
+  .scroll-hint span {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollBob 2s ease-in-out infinite;
+  }
+  @keyframes scrollBob {
+    0%,100% { transform: scaleY(1); opacity: 1; }
+    50%      { transform: scaleY(0.6); opacity: 0.4; }
+  }
 
-.modal.active { display:flex; }
+  /* ── STATS ── */
+  .stats {
+    padding: 72px 24px;
+    position: relative;
+  }
+  .stats-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+  }
+  .stat {
+    background: var(--bg);
+    padding: 36px 20px;
+    text-align: center;
+    transition: background 0.3s ease;
+    position: relative;
+  }
+  .stat::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(139,71,217,0.15), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .stat:hover::after { opacity: 1; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem, 5vw, 3.2rem);
+    letter-spacing: 0.04em;
+    background: linear-gradient(135deg, var(--accent), var(--crimson));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
 
-.modal-box {
-  background:#111;
-  padding:30px;
-  border-radius:20px;
-  width:300px;
-}
+  /* ── FEATURES ── */
+  .features {
+    padding: 80px 24px 100px;
+  }
+  .section-label {
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    opacity: 0;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    text-align: center;
+    letter-spacing: 0.06em;
+    margin-bottom: 60px;
+    background: linear-gradient(135deg, var(--text) 0%, var(--muted) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0;
+  }
 
-input, textarea {
-  width:100%;
-  margin-bottom:10px;
-  padding:10px;
-  background:#1a1828;
-  border:none;
-  color:#fff;
-}
+  .cards {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 36px 30px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(139,71,217,0.5), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(139,71,217,0.4);
+    box-shadow: 0 24px 60px rgba(139,71,217,0.15);
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card-glow {
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    top: -60px; right: -60px;
+  }
+  .card:hover .card-glow { opacity: 0.25; }
+  .card:nth-child(1) .card-glow { background: var(--violet); }
+  .card:nth-child(2) .card-glow { background: var(--crimson); }
+  .card:nth-child(3) .card-glow { background: var(--rose); }
+
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+  .card p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  /* ── CONTACT STRIP ── */
+  .contact-strip {
+    margin: 0 24px 80px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 28px;
+    border: 1px solid rgba(139,71,217,0.3);
+    background: linear-gradient(135deg, rgba(139,71,217,0.08), rgba(224,61,90,0.06));
+    padding: 52px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-strip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(139,71,217,0.12), transparent 60%);
+    pointer-events: none;
+  }
+  .contact-strip-text h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--text), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .contact-strip-text p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+  .contact-strip-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(8,7,16,0.85);
+    backdrop-filter: blur(12px);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: #100e1f;
+    border: 1px solid rgba(139,71,217,0.25);
+    border-radius: 28px;
+    padding: 44px 40px;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.03);
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 18px; right: 18px;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .modal-close:hover { background: rgba(224,61,90,0.15); color: var(--crimson); border-color: var(--crimson); }
+
+  .modal h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, var(--text), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .modal-sub {
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin-bottom: 28px;
+  }
+
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 7px;
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: rgba(139,71,217,0.6);
+    background: rgba(139,71,217,0.06);
+  }
+  .field textarea { resize: vertical; min-height: 90px; }
+
+  .submit {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #8b47d9, #e03d5a);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .submit::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s ease;
+  }
+  .submit:hover::after { background: rgba(255,255,255,0.08); }
+  .submit:hover { box-shadow: 0 8px 32px rgba(139,71,217,0.45); transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 24px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .cards { grid-template-columns: 1fr; max-width: 500px; }
+    .contact-strip { flex-direction: column; text-align: center; padding: 40px 28px; }
+    .contact-strip-actions { flex-direction: row; width: 100%; justify-content: center; }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 48px 18px 70px; }
+    h1 { font-size: clamp(3.5rem, 22vw, 5.5rem); }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .stat { padding: 28px 16px; }
+    .cta-group { flex-direction: column; align-items: stretch; }
+    .btn { justify-content: center; padding: 15px 24px; }
+    .modal { padding: 32px 22px; }
+    .contact-strip { margin: 0 16px 60px; }
+    .contact-strip-actions { flex-direction: column; }
+    .contact-strip-actions .btn { width: 100%; justify-content: center; }
+  }
+
+  @media (max-width: 400px) {
+    .stats-inner { grid-template-columns: 1fr 1fr; }
+    h1 { font-size: 3.2rem; }
+  }
 </style>
 </head>
-
 <body>
 
-<section class="hero">
-  <h1>WOLF<span class="tld">.BUSINESS</span></h1>
+<!-- Ambient blobs -->
+<div class="blobs" aria-hidden="true">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
 
-  <div class="stats">
-    <div class="stats-inner">
+<div class="page">
 
-      <div class="stat"><div class="stat-num" data-target="4">0</div><div class="stat-label">Letters</div></div>
-      <div class="stat"><div class="stat-num" data-target="1">0</div><div class="stat-label">Syllable</div></div>
-      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Word</div></div>
-      <div class="stat"><div class="stat-num">💡</div><div class="stat-label">Meaning</div></div>
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="badge"><span class="badge-dot"></span> Premium Domain For Sale</div>
 
+    <div class="wolf" aria-hidden="true">🐺</div>
+
+    <h1>
+      WOLF
+      <span class="tld">.BUSINESS</span>
+    </h1>
+
+    <p class="tagline">
+       <strong>“Four letters. One syllable. One premium dictionary domain — semantically clear. 🐺” ✅
+    </p>
+
+    <div class="cta-group">
+      <button class="btn btn-primary" onclick="openModal()">✉️ Send an Inquiry</button>
+      <a class="btn btn-ghost" href="tel:+201276919466">📞 Call Direct</a>
+      <a class="btn btn-ghost" href="https://wa.me/201276919466?text=I%27m%20interested%20in%20wolf.business" target="_blank" rel="noopener">💬 WhatsApp</a>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ── STATS ── -->
+  <section class="stats" aria-label="Domain at a glance">
+    <div class="stats-inner reveal">
+      <div class="stat">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Letters Only</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Syllable</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Dictionary Word</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">.BUSINESS</div>
+        <div class="stat-label">Premium TLD</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURES ── -->
+  <section class="features">
+    <p class="section-label reveal">Why this domain?</p>
+    <h2 class="section-title reveal">The WOLF Advantage</h2>
+
+    <div class="cards">
+      <div class="card reveal">
+        <div class="card-glow"></div>
+        <span class="card-icon">💎</span>
+        <h3>Genuine Digital Rarity</h3>
+        <p>Ultra-short dictionary domains in this tier are nearly impossible to acquire. Wolf.business is a one-of-a-kind asset — once it's gone, it's gone for good.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-glow"></div>
+        <span class="card-icon">🎯</span>
+        <h3>Instant Brand Authority</h3>
+        <p>Four letters. One syllable. Zero ambiguity. Whether you're a startup, agency, or global enterprise — this domain positions you as an apex player from day one.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-glow"></div>
+        <span class="card-icon">📈</span>
+        <h3>Appreciating Asset</h3>
+        <p>Premium short domains consistently outperform traditional investments. Wolf.business sits at the intersection of power, strategy, and long-term brand equity.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT STRIP ── -->
+  <div class="contact-strip reveal">
+    <div class="contact-strip-text">
+      <h2>Ready to Make an Offer?</h2>
+      <p>Reach out directly — we respond fast and negotiate in good faith.</p>
+    </div>
+    <div class="contact-strip-actions">
+      <button class="btn btn-primary" onclick="openModal()">✉️ Inquire Now</button>
+      <a class="btn btn-ghost" href="https://wa.me/201276919466?text=I%27m%20interested%20in%20wolf.business" target="_blank" rel="noopener">💬 WhatsApp</a>
     </div>
   </div>
 
-  <div class="cta">
-    <button class="primary" onclick="openModal()">Send Inquiry</button>
-    <button class="ghost">Call</button>
-  </div>
-</section>
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p>© 2026 WOLF.BUSINESS &nbsp;·&nbsp; Premium Domain &nbsp;·&nbsp;
+       <a href="tel:+201276919466">+20 127 691 9466</a>
+    </p>
+  </footer>
 
-<!-- MODAL -->
-<div class="modal" id="modal">
-  <div class="modal-box">
-    <h3>Contact</h3>
-    <input placeholder="Name">
-    <input placeholder="Email">
-    <textarea placeholder="Message"></textarea>
-    <button onclick="closeModal()">Send</button>
+</div><!-- /page -->
+
+<!-- ── MODAL ── -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="Inquiry form">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    <h2>Express Interest</h2>
+    <p class="modal-sub">Fill in your details and we'll be in touch promptly.</p>
+
+    <form id="inquiryForm" onsubmit="handleSubmit(event)" novalidate>
+      <div class="field">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="John Smith" required>
+      </div>
+      <div class="field">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="john@company.com" required>
+      </div>
+      <div class="field">
+        <label for="phone">Phone (optional)</label>
+        <input type="tel" id="phone" name="phone" placeholder="+1 555 000 0000">
+      </div>
+      <div class="field">
+        <label for="offer">Your Offer / Budget (optional)</label>
+        <input type="text" id="offer" name="offer" placeholder="e.g. $5,000 or open to discussion">
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell us how you plan to use this domain…"></textarea>
+      </div>
+      <button type="submit" class="submit">Send Inquiry →</button>
+    </form>
   </div>
 </div>
 
 <script>
-function openModal(){ document.getElementById('modal').classList.add('active'); }
-function closeModal(){ document.getElementById('modal').classList.remove('active'); }
+  /* ── Modal ── */
+  const overlay = document.getElementById('modalOverlay');
+  function openModal()  { overlay.classList.add('open');  document.body.style.overflow = 'hidden'; }
+  function closeModal() { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-/* 🔢 Count Up Animation */
-document.querySelectorAll('.stat-num').forEach(el=>{
-  let target = el.getAttribute('data-target');
-  if(!target) return;
+  function handleSubmit(e) {
+    e.preventDefault();
+    const name  = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const offer = document.getElementById('offer').value;
+    const msg   = document.getElementById('message').value;
+    const body  = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nOffer/Budget: ${offer}\n\nMessage:\n${msg}`;
+    window.location.href = `mailto:abdullahaboulela@gmail.com?subject=${encodeURIComponent('Domain Inquiry — wolf.business from ' + name)}&body=${encodeURIComponent(body)}`;
+    closeModal();
+    e.target.reset();
+  }
 
-  let count = 0;
-  let speed = target / 40;
+  /* ── Scroll Reveal ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        // stagger cards
+        const delay = entry.target.closest('.cards')
+          ? Array.from(entry.target.parentElement.children).indexOf(entry.target) * 120
+          : 0;
+        setTimeout(() => entry.target.classList.add('visible'), delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
 
-  let interval = setInterval(()=>{
-    count += speed;
-    if(count >= target){
-      el.innerText = target;
-      clearInterval(interval);
-    } else {
-      el.innerText = Math.floor(count);
-    }
-  },20);
-});
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
-
 </body>
 </html>
