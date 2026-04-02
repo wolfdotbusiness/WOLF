@@ -53,6 +53,24 @@ input::placeholder, textarea::placeholder { color:var(--muted); }
 textarea { resize:vertical; min-height:90px; }
 .modal-box .send-btn { width:100%; padding:13px; background:linear-gradient(135deg,#8b47d9,#e03d5a); color:#fff; border:none; border-radius:50px; font-size:15px; font-weight:700; cursor:pointer; transition:opacity .2s,transform .15s; margin-top:4px; }
 .modal-box .send-btn:hover { opacity:.88; transform:scale(1.02); }
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .hero { padding: 24px 16px; }
+  .stats { margin-top: 32px; }
+  .stats-inner { gap: 12px; }
+  .stat { padding: 24px 16px; border-radius: 14px; }
+  .stat-num { font-size: 30px; }
+  .cta { margin-top: 32px; flex-direction: column; align-items: center; gap: 10px; }
+  .cta button { width: 100%; max-width: 280px; }
+  .modal-box { width: calc(100vw - 32px); padding: 28px 20px; border-radius: 18px; }
+  .modal-box h3 { font-size: 24px; }
+  input, textarea { font-size: 16px; }
+}
+@media (max-width: 360px) {
+  .stats-inner { flex-direction: column; align-items: center; }
+  .stat { width: 100%; max-width: 260px; }
+}
 </style>
 </head>
 <body>
@@ -62,8 +80,8 @@ textarea { resize:vertical; min-height:90px; }
     <div class="stats-inner">
       <div class="stat"><div class="stat-num" data-target="4">0</div><div class="stat-label">Letters</div></div>
       <div class="stat"><div class="stat-num" data-target="1">0</div><div class="stat-label">Syllable</div></div>
-      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Dictionary Word</div></div>
-      <div class="stat"><div class="stat-num">💡</div><div class="stat-label">Semantic Domain</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Word</div></div>
+      <div class="stat"><div class="stat-num">💡</div><div class="stat-label">Meaning</div></div>
     </div>
   </div>
   <div class="cta">
