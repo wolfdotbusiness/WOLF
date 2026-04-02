@@ -110,11 +110,13 @@ function sendEmail() {
   var phone = document.getElementById("inp-phone").value.trim();
   var msg   = document.getElementById("inp-msg").value.trim();
 
-  ["inp-name","inp-email","inp-msg"].forEach(function(id){ document.getElementById(id).classList.remove("error"); });
+  ["inp-name","inp-email","inp-phone","inp-msg"].forEach(function(id){ document.getElementById(id).classList.remove("error"); });
 
   var valid = true;
   if (!name)  { document.getElementById("inp-name").classList.add("error"); valid = false; }
-  if (!email) { document.getElementById("inp-email").classList.add("error"); valid = false; }
+  var validEmail = email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (email && !validEmail) { document.getElementById("inp-email").classList.add("error"); valid = false; }
+  if (!email && !phone) { document.getElementById("inp-email").classList.add("error"); document.getElementById("inp-phone").classList.add("error"); valid = false; }
   if (!msg)   { document.getElementById("inp-msg").classList.add("error"); valid = false; }
   if (!valid) return;
 
