@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Wolf.Business</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root { --crimson:#e03d5a; --violet:#8b47d9; --bg:#080710; --text:#f0eaf8; --muted:#8a82a0; --accent:#c97ef5; }
@@ -25,24 +26,9 @@ h1 { font-family:'Bebas Neue'; font-size: clamp(80px, 16vw, 180px); line-height:
 button { padding:14px 28px; border:none; border-radius:50px; cursor:pointer; font-weight:600; }
 .primary { background:linear-gradient(135deg,#8b47d9,#e03d5a); color:#fff; }
 .ghost { background:transparent; border:1px solid #8b47d9; color:#c97ef5; }
-
-/* ─── MODAL OVERLAY ─── */
 .modal { display:none; position:fixed; inset:0; background: rgba(8,7,16,0.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); justify-content:center; align-items:center; z-index:999; }
 .modal.active { display:flex; }
-
-/* ─── MODAL BOX glassmorphism ─── */
-.modal-box {
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(201,126,245,0.25);
-  box-shadow: 0 8px 40px rgba(139,71,217,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
-  padding: 36px 32px;
-  border-radius: 24px;
-  width: 340px;
-  position: relative;
-  animation: popIn .3s cubic-bezier(.34,1.56,.64,1) both;
-}
+.modal-box { background: rgba(255,255,255,0.05); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(201,126,245,0.25); box-shadow: 0 8px 40px rgba(139,71,217,0.35), inset 0 1px 0 rgba(255,255,255,0.08); padding: 36px 32px; border-radius: 24px; width: 340px; position: relative; animation: popIn .3s cubic-bezier(.34,1.56,.64,1) both; }
 @keyframes popIn { from{opacity:0;transform:scale(.88) translateY(20px)} to{opacity:1;transform:scale(1) translateY(0)} }
 .modal-box h3 { font-family:'Bebas Neue'; font-size:28px; letter-spacing:2px; background:linear-gradient(135deg,#c97ef5,#e03d5a); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:20px; }
 .modal-close { position:absolute; top:14px; right:18px; background:transparent; border:none; color:var(--muted); font-size:20px; cursor:pointer; padding:4px 8px; border-radius:50%; transition:color .2s,background .2s; }
@@ -50,11 +36,14 @@ button { padding:14px 28px; border:none; border-radius:50px; cursor:pointer; fon
 input, textarea { width:100%; margin-bottom:12px; padding:12px 14px; background:rgba(255,255,255,0.07); border:1px solid rgba(201,126,245,0.2); border-radius:12px; color:#fff; font-family:'DM Sans',sans-serif; font-size:14px; outline:none; transition:border-color .2s,background .2s; }
 input:focus, textarea:focus { border-color:rgba(201,126,245,0.6); background:rgba(255,255,255,0.10); }
 input::placeholder, textarea::placeholder { color:var(--muted); }
+input.error, textarea.error { border-color:#e03d5a; }
 textarea { resize:vertical; min-height:90px; }
 .modal-box .send-btn { width:100%; padding:13px; background:linear-gradient(135deg,#8b47d9,#e03d5a); color:#fff; border:none; border-radius:50px; font-size:15px; font-weight:700; cursor:pointer; transition:opacity .2s,transform .15s; margin-top:4px; }
 .modal-box .send-btn:hover { opacity:.88; transform:scale(1.02); }
-
-/* RESPONSIVE */
+.modal-box .send-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+.success-msg { display:none; text-align:center; padding:20px 0; }
+.success-msg .check { font-size:52px; margin-bottom:14px; }
+.success-msg p { color:var(--accent); font-weight:600; font-size:15px; line-height:1.6; }
 @media (max-width: 480px) {
   .hero { padding: 24px 16px; }
   .stats { margin-top: 32px; }
@@ -86,7 +75,7 @@ textarea { resize:vertical; min-height:90px; }
   </div>
   <div class="cta">
     <button class="primary" onclick="openModal()">Send Inquiry</button>
-    <button class="ghost">Call</button>
+    <button class="ghost" onclick="callNow()">Call</button>
   </div>
 </section>
 
@@ -94,32 +83,77 @@ textarea { resize:vertical; min-height:90px; }
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <h3>Contact Us</h3>
-    <input id="inp-name" placeholder="Name" />
-    <input id="inp-email" placeholder="Email" />
-    <input id="inp-phone" placeholder="Phone" type="tel" />
-    <textarea id="inp-msg" placeholder="Message"></textarea>
-    <button class="send-btn" onclick="sendEmail()">Send →</button>
+    <div id="form-fields">
+      <input id="inp-name" placeholder="Name *" />
+      <input id="inp-email" placeholder="Email *" type="email" />
+      <input id="inp-phone" placeholder="Phone" type="tel" />
+      <textarea id="inp-msg" placeholder="Message *"></textarea>
+      <button class="send-btn" id="send-btn" onclick="sendEmail()">Send →</button>
+    </div>
+    <div class="success-msg" id="success-msg">
+      <div class="check">✅</div>
+      <p>Message sent successfully!<br>We'll get back to you soon.</p>
+    </div>
   </div>
 </div>
 
 <script>
-function sendEmail() {
-  var name = document.getElementById("inp-name").value;
-  var email = document.getElementById("inp-email").value;
-  var phone = document.getElementById("inp-phone").value;
-  var msg = document.getElementById("inp-msg").value;
-  var subject = encodeURIComponent("New Inquiry from " + name);
-  var body = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\nPhone: " + phone + "\n\nMessage:\n" + msg);
-  window.location.href = "mailto:abdullahaboulela@gmail.com?subject=" + subject + "&body=" + body;
-  closeModal();
+(function(){ emailjs.init("QrJxsuW2YuixK4Jnd"); })();
+
+function callNow() {
+  window.location.href = "tel:+201276919466";
 }
-function openModal()  { document.getElementById('modal').classList.add('active'); }
+
+function sendEmail() {
+  var name  = document.getElementById("inp-name").value.trim();
+  var email = document.getElementById("inp-email").value.trim();
+  var phone = document.getElementById("inp-phone").value.trim();
+  var msg   = document.getElementById("inp-msg").value.trim();
+
+  ["inp-name","inp-email","inp-msg"].forEach(function(id){ document.getElementById(id).classList.remove("error"); });
+
+  var valid = true;
+  if (!name)  { document.getElementById("inp-name").classList.add("error"); valid = false; }
+  if (!email) { document.getElementById("inp-email").classList.add("error"); valid = false; }
+  if (!msg)   { document.getElementById("inp-msg").classList.add("error"); valid = false; }
+  if (!valid) return;
+
+  var btn = document.getElementById("send-btn");
+  btn.disabled = true;
+  btn.textContent = "Sending...";
+
+  emailjs.send("service_n2lmlwb", "template_hrz0r6o", {
+    name: name, email: email, phone: phone, message: msg
+  }).then(function() {
+    document.getElementById("form-fields").style.display = "none";
+    document.getElementById("success-msg").style.display = "block";
+    setTimeout(function(){ closeModal(); }, 2500);
+  }, function(error) {
+    btn.disabled = false;
+    btn.textContent = "Send →";
+    alert("Failed to send ❌ Please try again.");
+    console.log(error);
+  });
+}
+
+function openModal() {
+  ["inp-name","inp-email","inp-phone","inp-msg"].forEach(function(id){
+    var el = document.getElementById(id);
+    el.value = ""; el.classList.remove("error");
+  });
+  document.getElementById("form-fields").style.display = "block";
+  document.getElementById("success-msg").style.display = "none";
+  var btn = document.getElementById("send-btn");
+  btn.disabled = false; btn.textContent = "Send →";
+  document.getElementById('modal').classList.add('active');
+}
 function closeModal() { document.getElementById('modal').classList.remove('active'); }
 function handleOverlayClick(e) { if(e.target===document.getElementById('modal')) closeModal(); }
-document.querySelectorAll('.stat-num').forEach(el=>{
-  let target=el.getAttribute('data-target'); if(!target) return;
-  let count=0, speed=target/40;
-  let interval=setInterval(()=>{ count+=speed; if(count>=target){el.innerText=target;clearInterval(interval);}else{el.innerText=Math.floor(count);} },20);
+
+document.querySelectorAll('.stat-num').forEach(function(el){
+  var target=el.getAttribute('data-target'); if(!target) return;
+  var count=0, speed=target/40;
+  var interval=setInterval(function(){ count+=speed; if(count>=target){el.innerText=target;clearInterval(interval);}else{el.innerText=Math.floor(count);} },20);
 });
 </script>
 </body>
