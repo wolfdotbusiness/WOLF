@@ -76,15 +76,25 @@ textarea { resize:vertical; min-height:90px; }
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <h3>Contact Us</h3>
-    <input placeholder="Name" />
-    <input placeholder="Email" />
-    <input placeholder="Phone" type="tel" />
-    <textarea placeholder="Message"></textarea>
-    <button class="send-btn" onclick="closeModal()">Send →</button>
+    <input id="inp-name" placeholder="Name" />
+    <input id="inp-email" placeholder="Email" />
+    <input id="inp-phone" placeholder="Phone" type="tel" />
+    <textarea id="inp-msg" placeholder="Message"></textarea>
+    <button class="send-btn" onclick="sendEmail()">Send →</button>
   </div>
 </div>
 
 <script>
+function sendEmail() {
+  var name = document.getElementById("inp-name").value;
+  var email = document.getElementById("inp-email").value;
+  var phone = document.getElementById("inp-phone").value;
+  var msg = document.getElementById("inp-msg").value;
+  var subject = encodeURIComponent("New Inquiry from " + name);
+  var body = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\nPhone: " + phone + "\n\nMessage:\n" + msg);
+  window.location.href = "mailto:abdullahaboulela@gmail.com?subject=" + subject + "&body=" + body;
+  closeModal();
+}
 function openModal()  { document.getElementById('modal').classList.add('active'); }
 function closeModal() { document.getElementById('modal').classList.remove('active'); }
 function handleOverlayClick(e) { if(e.target===document.getElementById('modal')) closeModal(); }
